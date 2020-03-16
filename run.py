@@ -135,12 +135,14 @@ def prepare_data(batch_size, trainval_filepath, test_filepath, transforms = None
     test_dl = data.DataLoader(test_data, batch_size = batch_size, shuffle = False)
     return train_dl, valid_dl, test_dl
 
-def avg_precision(outputs, labels):
+def avg_precision(outputs, labels, threshold = 0.5):
     outputs = outputs.cpu().detach()
-    list_of_ps = np.array([average_precision_score(labels[i,:], outputs[i,:]) for i in range(labels.shape[0])])
-    return np.mean(list_of_ps)
+    outputs = np.where(outputs >= threshold, 1, 0) # Shape: (nsamples, nclass)
+    list_of_ps = np.array([average_precision_score(labels[:,i], outputs[:,i]) for i in range(labels.shape[1])])
+    # average precision score unable to handle all 0s, we choose to ignore the nans.
+    return np.mean(list_of_ps[~np.isnan(list_of_ps)])
 
-def train_epoch(model,  trainloader,  criterion, device, optimizer, print_batch_results = False):
+def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 0.5, print_batch_results = False):
     model.train()
  
     running_precision = [] 
@@ -166,7 +168,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, print_batch_
         losses.append(loss.detach().cpu())
 
         # Track training accuracy
-        training_accuracy_batch = avg_precision(outputs, labels)
+        training_accuracy_batch = avg_precision(outputs, labels, threshold)
         running_precision.append(training_accuracy_batch)
         if print_batch_results:
             print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Accuracy: {training_accuracy_batch}')
@@ -174,7 +176,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, print_batch_
     accuracy = np.mean(running_precision)
     return np.array(losses), accuracy
 
-def evaluate(model, dataloader, criterion, device):
+def evaluate(model, dataloader, criterion, device, threshold):
 
     model.eval()
 
@@ -192,7 +194,7 @@ def evaluate(model, dataloader, criterion, device):
 
             losses.append(criterion(outputs, labels.to(device)).detach().cpu().numpy())
 
-            running_precision.append(avg_precision(outputs, labels))
+            running_precision.append(avg_precision(outputs, labels, threshold))
 
     accuracy = np.mean(running_precision)
 
@@ -204,6 +206,7 @@ def trainModel(train_dataloader,
                 criterion,
                 optimizer,
                 num_epochs,
+                threshold = 0.5,
                 scheduler = None,
                 plot = True,
                 device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
@@ -230,7 +233,7 @@ def trainModel(train_dataloader,
 
         model.train(True)
         GPUtil.showUtilization()
-        training_losses, training_measure = train_epoch(model, train_dataloader, criterion, device, optimizer, print_batch_results = print_batch_results)
+        training_losses, training_measure = train_epoch(model, train_dataloader, criterion, device, optimizer, threshold, print_batch_results = print_batch_results)
         
         losses_epoch_training.append(training_losses)
         measure_epoch_training.append(training_measure)
@@ -241,7 +244,7 @@ def trainModel(train_dataloader,
             scheduler.step()
 
         model.train(False)
-        validation_losses, validation_measure = evaluate(model, validation_dataloader, criterion, device)
+        validation_losses, validation_measure = evaluate(model, validation_dataloader, criterion, device, threshold)
         losses_epoch_val.append(validation_losses)
         measure_epoch_val.append(validation_measure)
         print(f'Average Validation Loss for epoch {epoch}: {np.mean(validation_losses):.3f}')
@@ -305,6 +308,7 @@ def train_test_model(train_dataloader,
                     model,
                     criterion,
                     optimizer,
+                    threshold = 0.5,
                     test = True,
                     validate = True,
                     train = True,
@@ -327,10 +331,10 @@ def train_test_model(train_dataloader,
         start_time = dt.datetime.now()
         if verbose:
             print('Training model...')
-            print_batch_results = False
+            print_batch_results = True
         else:
             print_batch_results = False
-        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, scheduler = scheduler, print_batch_results = print_batch_results)
+        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results)
         print(f'Best epoch: {best_epoch} Best Performance Measure: {best_perfmeasure:.5f}')
         
         if verbose:
@@ -362,13 +366,14 @@ if __name__=='__main__':
 
     # Set params, optimiser, loss and scheduler
     params = dict(
-        train = False,
+        train = True,
         predict = True,
         verbose = True,
         batch_size = 32,
         no_classes = 20,
         learning_rate = 0.001,
         num_epochs = 15,
+        threshold = 0.5,
         criterion = torch.nn.BCEWithLogitsLoss(),
         save_weights_fp = save_weights_fp,
         predictions_fp = predictions_fp
