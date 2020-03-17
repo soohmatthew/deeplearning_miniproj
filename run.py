@@ -431,6 +431,58 @@ def train_test_model(train_dataloader,
         except:
             raise ImportError('Model weights do not exist')
 
+def get_max_min_results(label):
+    
+    labels = [
+        'aeroplane', 'bicycle', 'bird', 'boat',
+        'bottle', 'bus', 'car', 'cat', 'chair',
+        'cow', 'diningtable', 'dog', 'horse',
+        'motorbike', 'person', 'pottedplant',
+        'sheep', 'sofa', 'train',
+        'tvmonitor']
+
+    index = labels.index(label)
+    # Get max scores
+    temp = np.argpartition(-output_results.T[index], 5)
+    max_result_args = pic_filepaths[temp[:5]]
+
+    temp = np.partition(-output_results.T[index], 5)
+    max_result = -temp[:5]
+
+    # Get min scores
+    temp = np.argpartition(output_results.T[index], 5)
+    min_result_args = pic_filepaths[temp[:5]]
+    temp = np.partition(output_results.T[index], 5)
+    min_result = temp[:5]
+    
+    return max_result_args, max_result, min_result_args, min_result
+
+def save_pic(output_results, pic_filepaths, label):
+    max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
+    filenames = list(max_result_args) + list(min_result_args)
+    fig,ax = plt.subplots(2,5)
+
+    figsize=(15,8)
+    dpi=150
+    fig.set_size_inches(figsize)
+    fig.set_dpi = dpi
+    fig.suptitle(f'Top 5 and Bottom 5 pictures for {label}')
+    
+    for i in range(len(filenames)):
+        with open(filenames[i],'rb') as f:
+            image=Image.open(f)
+            if i <= 4:
+                ax[0][i].imshow(image)
+                ax[0,i].axis('off')
+            else:
+                ax[1][i-5].imshow(image)
+                ax[1,i-5].axis('off')
+    
+    cwd = os.getcwd()
+    if not os.path.exists(cwd+'/topbot5/'):
+        os.makedirs(cwd+'/topbot5/')
+    fig.savefig(f'{cwd}/topbot5/{label}_topnbot5.png', dpi=fig.dpi)
+
 if __name__=='__main__':
     project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
 
@@ -442,16 +494,16 @@ if __name__=='__main__':
     save_weights_fp = os.path.join(project_dir, f"model_weights/model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
     validation_results_fp = os.path.join(project_dir,f"predictions/validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
     predictions_fp = os.path.join(project_dir, f"predictions/test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
-    
+
     # Set params, optimiser, loss and scheduler
     params = dict(
         train_model = True,
         predict_on_test = True,
         verbose = True,
-        batch_size = 4,
+        batch_size = 8,
         no_classes = 20,
         learning_rate = 0.001,
-        num_epochs = 2,
+        num_epochs = 15,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
@@ -494,3 +546,7 @@ if __name__=='__main__':
     output_results, pic_filepaths = validation_results.files
     pic_filepaths = validation_results[pic_filepaths]
     output_results = validation_results[output_results]
+    pic_filepaths = np.hstack(pic_filepaths)
+
+    for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
+        save_pic(output_results, pic_filepaths, label)
