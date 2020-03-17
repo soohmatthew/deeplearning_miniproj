@@ -138,15 +138,18 @@ def prepare_data(batch_size, trainval_filepath, test_filepath, transforms = None
 def avg_precision(outputs, labels, threshold = 0.5):
     outputs = outputs.cpu().detach()
     outputs = np.where(outputs >= threshold, 1, 0) # Shape: (nsamples, nclass)
-    list_of_ps = np.array([average_precision_score(labels[:,i], outputs[:,i]) for i in range(labels.shape[1])])
+    classwise_ps = np.array([average_precision_score(labels[:,i], outputs[:,i]) for i in range(labels.shape[1])])
     # average precision score unable to handle all 0s, we choose to ignore the nans.
-    return np.mean(list_of_ps[~np.isnan(list_of_ps)])
+    avg_precision_score = np.nanmean(classwise_ps)
+    return avg_precision_score, classwise_ps
 
-def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 0.5, print_batch_results = False):
+def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 0.5, print_batch_results = False, print_classwise_results = False):
     model.train()
  
     running_precision = [] 
+    running_classwise_ps = []
     losses = []
+    
     for batch_idx, data in enumerate(trainloader):
 
         inputs=data[0].to(device)
@@ -168,13 +171,29 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 
         losses.append(loss.detach().cpu())
 
         # Track training accuracy
-        training_accuracy_batch = avg_precision(outputs, labels, threshold)
-        running_precision.append(training_accuracy_batch)
+        avg_precision_score, classwise_ps = avg_precision(outputs, labels, threshold)
+        running_precision.append(avg_precision_score)
+        running_classwise_ps.append(classwise_ps)
         if print_batch_results:
-            print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Accuracy: {training_accuracy_batch}')
+            print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Accuracy: {avg_precision_score}')
 
-    accuracy = np.mean(running_precision)
-    return np.array(losses), accuracy
+    labels = [
+        'aeroplane', 'bicycle', 'bird', 'boat',
+        'bottle', 'bus', 'car', 'cat', 'chair',
+        'cow', 'diningtable', 'dog', 'horse',
+        'motorbike', 'person', 'pottedplant',
+        'sheep', 'sofa', 'train',
+        'tvmonitor']
+    
+    running_classwise_ps = np.array(running_classwise_ps)
+    running_classwise_ps = np.nanmean(running_classwise_ps, axis = 0)
+
+    if print_classwise_results:
+        for label in range(len(labels)):
+            print(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]} \n')
+
+    precision = np.mean(running_precision)
+    return np.array(losses), precision
 
 def evaluate(model, dataloader, criterion, device, threshold):
 
@@ -194,7 +213,8 @@ def evaluate(model, dataloader, criterion, device, threshold):
 
             losses.append(criterion(outputs, labels.to(device)).detach().cpu().numpy())
 
-            running_precision.append(avg_precision(outputs, labels, threshold))
+            avg_precision_score, _ = avg_precision(outputs, labels, threshold)
+            running_precision.append(avg_precision_score)
 
     accuracy = np.mean(running_precision)
 
@@ -209,9 +229,9 @@ def trainModel(train_dataloader,
                 threshold = 0.5,
                 scheduler = None,
                 plot = True,
-                device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
-                print_batch_results = False):
-
+                device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                print_batch_results = False,
+                print_classwise_results = False):
     if torch.cuda.is_available():
         model.cuda()
 
@@ -233,7 +253,7 @@ def trainModel(train_dataloader,
 
         model.train(True)
         GPUtil.showUtilization()
-        training_losses, training_measure = train_epoch(model, train_dataloader, criterion, device, optimizer, threshold, print_batch_results = print_batch_results)
+        training_losses, training_measure = train_epoch(model, train_dataloader, criterion, device, optimizer, threshold, print_batch_results = print_batch_results, print_classwise_results = print_classwise_results)
         
         losses_epoch_training.append(training_losses)
         measure_epoch_training.append(training_measure)
@@ -315,7 +335,7 @@ def train_test_model(train_dataloader,
                     verbose = False,
                     scheduler = None,
                     learning_rate = 0.01,
-                    batch_size = 64,
+                    batch_size = 32,
                     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu"),
                     num_epochs = 12,
                     **kwargs):
@@ -332,9 +352,10 @@ def train_test_model(train_dataloader,
         if verbose:
             print('Training model...')
             print_batch_results = True
+            print_classwise_results = True
         else:
             print_batch_results = False
-        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results)
+        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results, print_classwise_results = print_classwise_results)
         print(f'Best epoch: {best_epoch} Best Performance Measure: {best_perfmeasure:.5f}')
         
         if verbose:
@@ -366,15 +387,15 @@ if __name__=='__main__':
 
     # Set params, optimiser, loss and scheduler
     params = dict(
-        train = True,
+        train = False,
         predict = True,
         verbose = True,
-        batch_size = 32,
+        batch_size = 4,
         no_classes = 20,
         learning_rate = 0.001,
         num_epochs = 15,
         threshold = 0.5,
-        criterion = torch.nn.BCEWithLogitsLoss(),
+        criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
         predictions_fp = predictions_fp
     )
@@ -398,7 +419,8 @@ if __name__=='__main__':
         param.requires_grad = False
     convo_output_num_features = model_ft.classifier.in_features
     model_ft.classifier = torch.nn.Sequential(
-        torch.nn.Linear(convo_output_num_features, 20)
+        torch.nn.Linear(convo_output_num_features, 20),
+        torch.nn.Sigmoid()
     )
 
     params['model'] = model_ft
