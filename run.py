@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import datetime as dt
 import time
+import logging
 
 from torch.utils import data
 from torchvision import models, transforms
@@ -97,9 +98,9 @@ class Dataset(data.Dataset):
             X = self.transforms(X)
         if self.labels is not None:
             y = torch.from_numpy(np.array(self.labels[index]))
-            return X, y
+            return X, y, ID
         else:
-            return X
+            return X, ID
 
 def get_data(dataset, filepath, transforms = None):
     pv=PascalVOC(filepath)
@@ -177,6 +178,64 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 
         if print_batch_results:
             print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Accuracy: {avg_precision_score}')
 
+    # Prints the classwise precision scores in the train set
+    if print_classwise_results:
+        labels = [
+            'aeroplane', 'bicycle', 'bird', 'boat',
+            'bottle', 'bus', 'car', 'cat', 'chair',
+            'cow', 'diningtable', 'dog', 'horse',
+            'motorbike', 'person', 'pottedplant',
+            'sheep', 'sofa', 'train',
+            'tvmonitor']
+        
+        running_classwise_ps = np.array(running_classwise_ps)
+        running_classwise_ps = np.nanmean(running_classwise_ps, axis = 0)        
+        for label in range(len(labels)):
+            print(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]}')
+
+    precision = np.mean(running_precision)
+    return np.array(losses), precision
+
+def evaluate(model, dataloader, criterion, device, threshold, last_epoch, validation_results_fp):
+
+    model.eval()
+
+    running_classwise_ps = []
+    running_precision = [] 
+    losses = []
+    all_outputs = torch.tensor([], device=device)
+    all_filepaths = [] 
+
+    with torch.no_grad():
+        for _, data in enumerate(dataloader):
+
+            #print ('epoch at',len(dataloader.dataset), ctr)
+            inputs = data[0].to(device)
+            outputs = model(inputs).float()
+
+            # If it is the last epoch, we want to save all the output results
+            if last_epoch:
+                all_outputs = torch.cat((all_outputs, outputs), 0)
+            labels = data[1]
+            labels = labels.cpu().float()
+
+            filepaths = data[2]
+            all_filepaths.append(filepaths)
+            losses.append(criterion(outputs, labels.to(device)).detach().cpu().numpy())
+
+            avg_precision_score, classwise_ps = avg_precision(outputs, labels, threshold)
+            running_precision.append(avg_precision_score)
+            running_classwise_ps.append(classwise_ps)
+    
+    if last_epoch:
+        cwd = os.getcwd()
+        if not os.path.exists(cwd+'/predictions/'):
+            os.makedirs(cwd+'/predictions/')
+        all_outputs = all_outputs.cpu().numpy()
+        all_filepaths = np.array(all_filepaths)
+        np.savez(validation_results_fp, all_outputs, all_filepaths)
+
+    # Prints the classwise precision scores in the train set
     labels = [
         'aeroplane', 'bicycle', 'bird', 'boat',
         'bottle', 'bus', 'car', 'cat', 'chair',
@@ -186,35 +245,9 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 
         'tvmonitor']
     
     running_classwise_ps = np.array(running_classwise_ps)
-    running_classwise_ps = np.nanmean(running_classwise_ps, axis = 0)
-
-    if print_classwise_results:
-        for label in range(len(labels)):
-            print(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]} \n')
-
-    precision = np.mean(running_precision)
-    return np.array(losses), precision
-
-def evaluate(model, dataloader, criterion, device, threshold):
-
-    model.eval()
-
-    running_precision = [] 
-    losses = []
-    with torch.no_grad():
-        for _, data in enumerate(dataloader):
-
-            #print ('epoch at',len(dataloader.dataset), ctr)
-            inputs = data[0].to(device)
-            outputs = model(inputs).float()
-
-            labels = data[1]
-            labels = labels.cpu().float()
-
-            losses.append(criterion(outputs, labels.to(device)).detach().cpu().numpy())
-
-            avg_precision_score, _ = avg_precision(outputs, labels, threshold)
-            running_precision.append(avg_precision_score)
+    running_classwise_ps = np.nanmean(running_classwise_ps, axis = 0)    
+    for label in range(len(labels)):
+        logging.info(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]}')
 
     accuracy = np.mean(running_precision)
 
@@ -226,6 +259,7 @@ def trainModel(train_dataloader,
                 criterion,
                 optimizer,
                 num_epochs,
+                validation_results_fp,
                 threshold = 0.5,
                 scheduler = None,
                 plot = True,
@@ -243,6 +277,14 @@ def trainModel(train_dataloader,
     measure_epoch_training = []
     measure_epoch_val = []
 
+    # Log results
+    cwd = os.getcwd()
+    if not os.path.exists(cwd+'/logs/'):
+        os.makedirs(cwd+'/logs/')
+    logging.basicConfig(filename="logs/nn_training_" + str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_') + ".log",
+                        format='%(message)s',
+                        level=logging.INFO)
+
     for epoch in range(num_epochs):
         print(f'Epoch {epoch}/{num_epochs-1}')
         print('-' * 10)
@@ -258,16 +300,28 @@ def trainModel(train_dataloader,
         losses_epoch_training.append(training_losses)
         measure_epoch_training.append(training_measure)
 
+        logging.info(f'Average Training Loss for epoch {epoch}: {np.mean(training_losses):.3f}')
         print(f'Average Training Loss for epoch {epoch}: {np.mean(training_losses):.3f}')
+        logging.info(f'Average Training Performance Measure for epoch {epoch}: {training_measure:.3f}')
         print(f'Average Training Performance Measure for epoch {epoch}: {training_measure:.3f}')
+        
         if scheduler is not None:
             scheduler.step()
 
         model.train(False)
-        validation_losses, validation_measure = evaluate(model, validation_dataloader, criterion, device, threshold)
+        logging.info(f'Classwise Precision Scores for epoch {epoch}')
+        if epoch == num_epochs - 1: # If last epoch
+            last_epoch = True
+        else:
+            last_epoch = False
+        validation_losses, validation_measure = evaluate(model, validation_dataloader, criterion, device, threshold, last_epoch, validation_results_fp)
         losses_epoch_val.append(validation_losses)
         measure_epoch_val.append(validation_measure)
+
+        # Record info in log
+        logging.info(f'Average Validation Loss for epoch {epoch}: {np.mean(validation_losses):.3f}')
         print(f'Average Validation Loss for epoch {epoch}: {np.mean(validation_losses):.3f}')
+        logging.info(f'Validation Performance Measure for epoch {epoch}: {validation_measure:.3f}')
         print(f'Validation Performance Measure for epoch {epoch}: {validation_measure:.3f}')
 
         if validation_measure > best_measure: #Higher measure better as higher measure is higher accuracy
@@ -315,7 +369,7 @@ def predict(model, test_dl, save_weights_fp, device):
 
     with torch.no_grad():
         for _, data in enumerate(test_dl):
-            inputs = data.to(device)
+            inputs = data[0].to(device)
             outputs = model(inputs)
             all_outputs = torch.cat((all_outputs, outputs), 0)
 
@@ -329,10 +383,6 @@ def train_test_model(train_dataloader,
                     criterion,
                     optimizer,
                     threshold = 0.5,
-                    test = True,
-                    validate = True,
-                    train = True,
-                    verbose = False,
                     scheduler = None,
                     learning_rate = 0.01,
                     batch_size = 32,
@@ -347,30 +397,35 @@ def train_test_model(train_dataloader,
     
     #############
     # Train model
-    if train:
+    if params['train_model']:
         start_time = dt.datetime.now()
-        if verbose:
+        if params['verbose']:
             print('Training model...')
             print_batch_results = True
             print_classwise_results = True
         else:
             print_batch_results = False
-        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results, print_classwise_results = print_classwise_results)
+        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results, print_classwise_results = print_classwise_results, validation_results_fp = params['validation_results_fp'])
         print(f'Best epoch: {best_epoch} Best Performance Measure: {best_perfmeasure:.5f}')
         
-        if verbose:
+        if params['verbose']:
             print('Saving weights...')
+        cwd = os.getcwd()
+        if not os.path.exists(cwd+'/model_weights/'):
+            os.makedirs(cwd+'/model_weights/')
         torch.save(bestweights, save_weights_fp)
         print(f'Time Taken to train: {dt.datetime.now()-start_time}')
 
     ################
-    # For prediction
-    if predict:
-        if verbose:
+    # For prediction on test
+    if params['predict_on_test']:
+        if params['verbose']:
             print('Predicting on test set...')
         try:
+            if torch.cuda.is_available():
+                model.cuda()
             predictions = predict(model, test_dataloader, params['save_weights_fp'], device)
-            if verbose:
+            if params['verbose']:
                 print('Saving predictions...')
             np.save(params['predictions_fp'], predictions)
         except:
@@ -382,22 +437,26 @@ if __name__=='__main__':
     # Set filepaths
     trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
     test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
-    save_weights_fp = os.path.join(project_dir, 'model_weights.pth') # Save destination for model weights
-    predictions_fp = os.path.join(project_dir,'predictions.npy') # Save destination for test set predictions
 
+    # Set save destinations
+    save_weights_fp = os.path.join(project_dir, f"model_weights/model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
+    validation_results_fp = os.path.join(project_dir,f"predictions/validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
+    predictions_fp = os.path.join(project_dir, f"predictions/test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
+    
     # Set params, optimiser, loss and scheduler
     params = dict(
-        train = False,
-        predict = True,
+        train_model = True,
+        predict_on_test = True,
         verbose = True,
         batch_size = 4,
         no_classes = 20,
         learning_rate = 0.001,
-        num_epochs = 15,
+        num_epochs = 2,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
-        predictions_fp = predictions_fp
+        predictions_fp = predictions_fp,
+        validation_results_fp = validation_results_fp
     )
 
     # Set transforms
@@ -427,4 +486,12 @@ if __name__=='__main__':
     params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
     params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
 
+    # Train model
     train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
+
+    # Get filepath 
+    validation_results = np.load(validation_results_fp)
+    pic_filepaths, output_results = validation_results.files
+    pic_filepaths = validation_results[pic_filepaths]
+    output_results = validation_results[output_results]
+
