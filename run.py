@@ -220,7 +220,7 @@ def evaluate(model, dataloader, criterion, device, threshold, last_epoch, valida
             labels = labels.cpu().float()
 
             filepaths = data[2]
-            all_filepaths.append(filepaths)
+            all_filepaths.append(list(filepaths))
             losses.append(criterion(outputs, labels.to(device)).detach().cpu().numpy())
 
             avg_precision_score, classwise_ps = avg_precision(outputs, labels, threshold)
@@ -490,8 +490,7 @@ if __name__=='__main__':
     train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
 
     # Get filepath 
-    validation_results = np.load(validation_results_fp)
-    pic_filepaths, output_results = validation_results.files
+    validation_results = np.load(validation_results_fp, allow_pickle = True)
+    output_results, pic_filepaths = validation_results.files
     pic_filepaths = validation_results[pic_filepaths]
     output_results = validation_results[output_results]
-
