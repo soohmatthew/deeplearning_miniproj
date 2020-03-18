@@ -8,6 +8,8 @@ VOCdevkit
 *.npz
 *.npy
 
+plots/
+
 # C extensions
 *.so
 
