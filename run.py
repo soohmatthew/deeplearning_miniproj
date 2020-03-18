@@ -126,10 +126,10 @@ def get_test_data(filepath, transforms):
     X = [filepath + '/' + x for x in os.listdir(filepath)]
     return Dataset(pic_filename = X, labels = None, transforms = transforms)
 
-def prepare_data(batch_size, trainval_filepath, test_filepath, transforms = None):
-    train_data = get_data('train', trainval_filepath, transforms)
-    valid_data = get_data('val', trainval_filepath, transforms)
-    test_data = get_test_data(test_filepath, transforms)
+def prepare_data(batch_size, trainval_filepath, test_filepath, train_transforms = None, test_transforms = None):
+    train_data = get_data('train', trainval_filepath, train_transforms)
+    valid_data = get_data('val', trainval_filepath, test_transforms)
+    test_data = get_test_data(test_filepath, test_transforms)
 
     train_dl = data.DataLoader(train_data, batch_size = batch_size, shuffle = True)
     valid_dl = data.DataLoader(valid_data, batch_size = batch_size, shuffle = False)
@@ -171,12 +171,12 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 
         
         losses.append(loss.detach().cpu())
 
-        # Track training accuracy
+        # Track training precision score
         avg_precision_score, classwise_ps = avg_precision(outputs, labels, threshold)
         running_precision.append(avg_precision_score)
         running_classwise_ps.append(classwise_ps)
         if print_batch_results:
-            print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Accuracy: {avg_precision_score}')
+            print(f'Batch {batch_idx}. Loss: {loss.item():.2f}, Precision Score: {avg_precision_score}')
 
     # Prints the classwise precision scores in the train set
     if print_classwise_results:
@@ -249,9 +249,9 @@ def evaluate(model, dataloader, criterion, device, threshold, last_epoch, valida
     for label in range(len(labels)):
         logging.info(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]}')
 
-    accuracy = np.mean(running_precision)
+    precision_score = np.mean(running_precision)
 
-    return np.array(losses), accuracy
+    return np.array(losses), precision_score
 
 def trainModel(train_dataloader,
                 validation_dataloader,
@@ -281,9 +281,11 @@ def trainModel(train_dataloader,
     cwd = os.getcwd()
     if not os.path.exists(cwd+'/logs/'):
         os.makedirs(cwd+'/logs/')
-    logging.basicConfig(filename="logs/nn_training_" + str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_') + ".log",
+    logging.basicConfig(filename="logs/" + model.__class__.__name__ + "_nn_training_" + str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_') + ".log",
                         format='%(message)s',
                         level=logging.INFO)
+
+    logging.info(f"Training Log for {model.__class__.__name__} on {str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}")
 
     for epoch in range(num_epochs):
         print(f'Epoch {epoch}/{num_epochs-1}')
@@ -324,7 +326,7 @@ def trainModel(train_dataloader,
         logging.info(f'Validation Performance Measure for epoch {epoch}: {validation_measure:.3f}')
         print(f'Validation Performance Measure for epoch {epoch}: {validation_measure:.3f}')
 
-        if validation_measure > best_measure: #Higher measure better as higher measure is higher accuracy
+        if validation_measure > best_measure: #Higher measure better as higher measure is higher precision score
             bestweights = copy.deepcopy(model.state_dict())
             best_measure = validation_measure
             best_epoch = epoch
@@ -459,29 +461,33 @@ def get_max_min_results(label):
 
 def save_pic(output_results, pic_filepaths, label):
     max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
-    filenames = list(max_result_args) + list(min_result_args)
-    fig,ax = plt.subplots(2,5)
+    max_filenames = list(max_result_args)
+    min_filenames = list(min_result_args)
 
+    cwd = os.getcwd()
+    if not os.path.exists(cwd+'/topbot5/'):
+        os.makedirs(cwd+'/topbot5/')
+    fig,ax = plt.subplots(1,5)
     figsize=(15,8)
     dpi=150
     fig.set_size_inches(figsize)
     fig.set_dpi = dpi
-    fig.suptitle(f'Top 5 and Bottom 5 pictures for {label}')
     
-    for i in range(len(filenames)):
+    for i in range(len(max_filenames)):
+        with open(max_filenames[i],'rb') as f:
+            image=Image.open(f)
+            ax[0][i].imshow(image)
+            ax[0,i].axis('off')
+    fig.suptitle(f'Top 5 pictures for {label}')
+    fig.savefig(f'{cwd}/topbot5/{label}_top5.png', dpi=fig.dpi)
+
+    for i in range(len(min_filenames)):
         with open(filenames[i],'rb') as f:
             image=Image.open(f)
-            if i <= 4:
-                ax[0][i].imshow(image)
-                ax[0,i].axis('off')
-            else:
-                ax[1][i-5].imshow(image)
-                ax[1,i-5].axis('off')
-    
-    cwd = os.getcwd()
-    if not os.path.exists(cwd+'/topbot5/'):
-        os.makedirs(cwd+'/topbot5/')
-    fig.savefig(f'{cwd}/topbot5/{label}_topnbot5.png', dpi=fig.dpi)
+            ax[0][i].imshow(image)
+            ax[0,i].axis('off')
+    fig.suptitle(f'Bottom 5 pictures for {label}')
+    fig.savefig(f'{cwd}/topbot5/{label}_botom5.png', dpi=fig.dpi)
 
 if __name__=='__main__':
     project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
@@ -500,10 +506,10 @@ if __name__=='__main__':
         train_model = True,
         predict_on_test = True,
         verbose = True,
-        batch_size = 8,
+        batch_size = 4,
         no_classes = 20,
-        learning_rate = 0.001,
-        num_epochs = 15,
+        learning_rate = 0.005,
+        num_epochs = 10,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
@@ -512,23 +518,39 @@ if __name__=='__main__':
     )
 
     # Set transforms
-    transforms_centcrop = transforms.Compose([transforms.Resize(280),
-                                                transforms.CenterCrop(224),
-                                                transforms.ToTensor(), 
-                                                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    train_transforms_centcrop = transforms.Compose([transforms.Resize(280),
+                                                    transforms.RandomCrop(224),
+                                                    transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),
+                                                    transforms.RandomRotation(20),
+                                                    transforms.RandomHorizontalFlip(p=0.5),
+                                                    transforms.RandomVerticalFlip(p=0.5),
+                                                    transforms.RandomAffine(20),
+                                                    transforms.RandomGrayscale(p=0.1),
+                                                    transforms.ToTensor(), 
+                                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    
+    test_transforms_centcrop = transforms.Compose([transforms.Resize(280),
+                                                    transforms.CenterCrop(224),
+                                                    transforms.ToTensor(), 
+                                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ##################
     # Load dataloaders
     if params['verbose']:
         print('Loading data...')
-    train_dl, valid_dl, test_dl = prepare_data(batch_size = params['batch_size'], transforms = transforms_centcrop, trainval_filepath = trainval_fp, test_filepath = test_fp)
+    train_dl, valid_dl, test_dl = prepare_data(batch_size = params['batch_size'], train_transforms = train_transforms_centcrop, test_transforms = test_transforms_centcrop, trainval_filepath = trainval_fp, test_filepath = test_fp)
 
     ##################
     # Initialise model
+    #model_ft = models.resnet18(pretrained=True)
+    #convo_output_num_features = model_ft.fc.in_features
+
     model_ft = models.densenet121(pretrained=True)
+    convo_output_num_features = model_ft.classifier.in_features
+
     for param in model_ft.parameters():
         param.requires_grad = False
-    convo_output_num_features = model_ft.classifier.in_features
+
     model_ft.classifier = torch.nn.Sequential(
         torch.nn.Linear(convo_output_num_features, 20),
         torch.nn.Sigmoid()
@@ -541,7 +563,7 @@ if __name__=='__main__':
     # Train model
     train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
 
-    # Get filepath 
+    # Get filepath
     validation_results = np.load(validation_results_fp, allow_pickle = True)
     output_results, pic_filepaths = validation_results.files
     pic_filepaths = validation_results[pic_filepaths]
