@@ -268,7 +268,8 @@ def trainModel(train_dataloader,
                 plot = True,
                 device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
                 print_batch_results = False,
-                print_classwise_results = False):
+                print_classwise_results = False,
+                epoch_start_train_full_model = 0):
     if torch.cuda.is_available():
         model.cuda()
 
@@ -294,7 +295,7 @@ def trainModel(train_dataloader,
         print(f'Epoch {epoch}/{num_epochs-1}')
         print('-' * 10)
 
-        if epoch >= 5:
+        if epoch >= epoch_start_train_full_model:
             for idx, param in enumerate(model.parameters()):
                 param.requires_grad = True
 
@@ -545,8 +546,12 @@ def plot_tail_acc(model, valid_dl, save_weights_fp):
     plt.figure(figsize = (10,7))
     sns.lineplot(x=np.arange(len(results)), y=results)
     plt.title('Plot of tailacc(t)')
-    plt.xticks(1+np.arange(len(results)))
-    plt.show()
+    plt.xticks(np.arange(len(results)))
+    
+    cwd = os.getcwd()
+    if not os.path.exists(os.path.join(cwd,'plots')):
+        os.makedirs(os.path.join(cwd,'plots'))
+    plt.savefig(os.path.join('plots','tail_acc_' + str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_') + ".png"))
 
 def tailacc(y_pred, y, num_t_values = 10, start_t = 0.5):
     t_max = y_pred.transpose().max(axis = 1)
@@ -573,7 +578,7 @@ if __name__=='__main__':
     test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
 
     # Set save destinations
-    save_weights_fp = os.path.join(project_dir, 'model_weights', "model_weights.pth") # Save destination for model weights
+    save_weights_fp = os.path.join(project_dir, 'model_weights', f"model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
     validation_results_fp = os.path.join(project_dir,'predictions', f"validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
     predictions_fp = os.path.join(project_dir, 'predictions', f"test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
 
@@ -582,10 +587,10 @@ if __name__=='__main__':
         train_model = True,
         predict_on_test = True,
         verbose = True,
-        batch_size = 32,
+        batch_size = 8,
         no_classes = 20,
-        learning_rate = 0.005,
-        num_epochs = 15,
+        learning_rate = 0.001,
+        num_epochs = 75,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
@@ -635,7 +640,7 @@ if __name__=='__main__':
     if train_test:
         params['model'] = model_ft
         params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
-        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
+        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[25,50], gamma=0.1)
         # Train model
         train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
         print(f'Time Taken: {dt.datetime.now()-start_time}')
@@ -649,7 +654,8 @@ if __name__=='__main__':
         pic_filepaths = np.hstack(pic_filepaths)
 
     for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
-        save_pic(output_results, pic_filepaths, label)
+        save_top_pic(output_results, pic_filepaths, label)
+        save_bot_pic(output_results, pic_filepaths, label)
 
     if get_tail_acc:
         # Plot Tail Acct
