@@ -478,7 +478,7 @@ def get_max_min_results(label):
     
     return max_result_args, max_result, min_result_args, min_result
 
-def save_pic(output_results, pic_filepaths, label):
+def save_top_pic(output_results, pic_filepaths, label):
     max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
     max_filenames = list(max_result_args)
     min_filenames = list(min_result_args)
@@ -487,24 +487,38 @@ def save_pic(output_results, pic_filepaths, label):
     if not os.path.exists(cwd+'/topbot5/'):
         os.makedirs(cwd+'/topbot5/')
     fig,ax = plt.subplots(1,5)
-    figsize=(15,8)
-    dpi=150
+    figsize=(15,3)
+    dpi=300
     fig.set_size_inches(figsize)
     fig.set_dpi = dpi
     
     for i in range(len(max_filenames)):
         with open(max_filenames[i],'rb') as f:
             image=Image.open(f)
-            ax[0][i].imshow(image)
-            ax[0,i].axis('off')
+            ax[i].imshow(image)
+            ax[i].axis('off')
     fig.suptitle(f'Top 5 pictures for {label}')
     fig.savefig(f'{cwd}/topbot5/{label}_top5.png', dpi=fig.dpi)
+    
+def save_bot_pic(output_results, pic_filepaths, label):
+    max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
+    max_filenames = list(max_result_args)
+    min_filenames = list(min_result_args)
+
+    cwd = os.getcwd()
+    if not os.path.exists(cwd+'/topbot5/'):
+        os.makedirs(cwd+'/topbot5/')
+    fig,ax = plt.subplots(1,5)
+    figsize=(15,3)
+    dpi=300
+    fig.set_size_inches(figsize)
+    fig.set_dpi = dpi
 
     for i in range(len(min_filenames)):
-        with open(filenames[i],'rb') as f:
+        with open(min_filenames[i],'rb') as f:
             image=Image.open(f)
-            ax[0][i].imshow(image)
-            ax[0,i].axis('off')
+            ax[i].imshow(image)
+            ax[i].axis('off')
     fig.suptitle(f'Bottom 5 pictures for {label}')
     fig.savefig(f'{cwd}/topbot5/{label}_botom5.png', dpi=fig.dpi)
 
