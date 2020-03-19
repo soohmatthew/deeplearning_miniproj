@@ -5,6 +5,7 @@ import torch
 import datetime as dt
 import time
 import logging
+import seaborn as sns
 
 from torch.utils import data
 from torchvision import models, transforms
@@ -15,6 +16,8 @@ import torch.nn.functional as F
 import torch.nn as nn
 import copy
 import matplotlib.pyplot as plt
+
+sns.set(style="darkgrid")
 
 class PascalVOC:
     """
@@ -191,7 +194,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer, threshold = 
         running_classwise_ps = np.array(running_classwise_ps)
         running_classwise_ps = np.nanmean(running_classwise_ps, axis = 0)        
         for label in range(len(labels)):
-            print(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]}')
+            print(f'Class: {labels[label]}, Precision Score: {running_classwise_ps[label]:.3f}')
 
     precision = np.mean(running_precision)
     return np.array(losses), precision
@@ -384,10 +387,16 @@ def train_test_model(train_dataloader,
                     model,
                     criterion,
                     optimizer,
+                    validation_results_fp,
+                    predict_on_test,
+                    save_weights_fp,
                     threshold = 0.5,
+                    test = True,
+                    train_model = True,
+                    verbose = False,
                     scheduler = None,
                     learning_rate = 0.01,
-                    batch_size = 32,
+                    batch_size = 64,
                     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu"),
                     num_epochs = 12,
                     **kwargs):
@@ -399,18 +408,29 @@ def train_test_model(train_dataloader,
     
     #############
     # Train model
-    if params['train_model']:
+    if train_model:
         start_time = dt.datetime.now()
-        if params['verbose']:
+        if verbose:
             print('Training model...')
-            print_batch_results = True
-            print_classwise_results = True
+            print_batch_results = False
+            print_classwise_results = False
         else:
             print_batch_results = False
-        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader, validation_dataloader = validation_dataloader, model = model_ft, criterion = criterion , optimizer = optimizer, num_epochs = num_epochs, threshold = threshold, scheduler = scheduler, print_batch_results = print_batch_results, print_classwise_results = print_classwise_results, validation_results_fp = params['validation_results_fp'])
+        best_epoch, best_perfmeasure, bestweights = trainModel(train_dataloader = train_dataloader,
+                                                            validation_dataloader = validation_dataloader,
+                                                            model = model,
+                                                            criterion = criterion ,
+                                                            optimizer = optimizer,
+                                                            num_epochs = num_epochs,
+                                                            threshold = threshold,
+                                                            scheduler = scheduler,
+                                                            print_batch_results = print_batch_results,
+                                                            print_classwise_results = print_classwise_results,
+                                                            validation_results_fp = validation_results_fp)
+
         print(f'Best epoch: {best_epoch} Best Performance Measure: {best_perfmeasure:.5f}')
         
-        if params['verbose']:
+        if verbose:
             print('Saving weights...')
         cwd = os.getcwd()
         if not os.path.exists(cwd+'/model_weights/'):
@@ -420,21 +440,20 @@ def train_test_model(train_dataloader,
 
     ################
     # For prediction on test
-    if params['predict_on_test']:
-        if params['verbose']:
+    if predict_on_test:
+        if verbose:
             print('Predicting on test set...')
-        try:
+        if os.path.exists(save_weights_fp):
             if torch.cuda.is_available():
                 model.cuda()
-            predictions = predict(model, test_dataloader, params['save_weights_fp'], device)
-            if params['verbose']:
+            predictions = predict(model, test_dataloader, save_weights_fp, device)
+            if verbose:
                 print('Saving predictions...')
-            np.save(params['predictions_fp'], predictions)
-        except:
+            np.save(predictions_fp, predictions)
+        else:
             raise ImportError('Model weights do not exist')
 
 def get_max_min_results(label):
-    
     labels = [
         'aeroplane', 'bicycle', 'bird', 'boat',
         'bottle', 'bus', 'car', 'cat', 'chair',
@@ -489,27 +508,70 @@ def save_pic(output_results, pic_filepaths, label):
     fig.suptitle(f'Bottom 5 pictures for {label}')
     fig.savefig(f'{cwd}/topbot5/{label}_botom5.png', dpi=fig.dpi)
 
+def plot_tail_acc(model, valid_dl, save_weights_fp):
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+    model.to(device)
+    model.load_state_dict(torch.load(save_weights_fp))
+    model.eval()
+
+    y = []
+    y_pred = []
+    with torch.no_grad():
+        for _, data in enumerate(valid_dl):
+            X = data[0]
+            y.append(data[1])
+            y_pred.append(model(X.to(device)))
+
+    y = np.concatenate([i.cpu().detach().numpy() for i in y])
+    y_pred = np.concatenate([i.cpu().detach().numpy() for i in y_pred])
+
+    results = tailacc(y_pred, y)
+
+    plt.figure(figsize = (10,7))
+    sns.lineplot(x=np.arange(len(results)), y=results)
+    plt.title('Plot of tailacc(t)')
+    plt.xticks(1+np.arange(len(results)))
+    plt.show()
+
+def tailacc(y_pred, y, num_t_values = 10, start_t = 0.5):
+    t_max = y_pred.transpose().max(axis = 1)
+    t_range = np.linspace(start_t,t_max,num_t_values).reshape(1,num_t_values,20)
+    y_pred_expand = np.expand_dims(y_pred, axis = 2).transpose((0,2,1))
+    y_expand = np.expand_dims(y, axis = 2).transpose((0,2,1))
+    indicator = y_pred_expand >= t_range
+    result = (np.logical_and((y_pred_expand >= start_t) == True,(y_pred_expand >= start_t) == y_expand)*indicator).sum(axis = 0)/indicator.sum(axis = 0)
+    result = result.mean(axis = 1)
+
+    return result
+
 if __name__=='__main__':
     project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
+
+    start_time = dt.datetime.now()
+
+    train_test = True
+    find_scoring_images = True
+    get_tail_acc = True
 
     # Set filepaths
     trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
     test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
 
     # Set save destinations
-    save_weights_fp = os.path.join(project_dir, f"model_weights/model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
-    validation_results_fp = os.path.join(project_dir,f"predictions/validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
-    predictions_fp = os.path.join(project_dir, f"predictions/test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
+    save_weights_fp = os.path.join(project_dir, 'model_weights', "model_weights.pth") # Save destination for model weights
+    validation_results_fp = os.path.join(project_dir,'predictions', f"validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
+    predictions_fp = os.path.join(project_dir, 'predictions', f"test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
 
     # Set params, optimiser, loss and scheduler
     params = dict(
         train_model = True,
         predict_on_test = True,
         verbose = True,
-        batch_size = 4,
+        batch_size = 32,
         no_classes = 20,
         learning_rate = 0.005,
-        num_epochs = 10,
+        num_epochs = 15,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
@@ -531,7 +593,7 @@ if __name__=='__main__':
     
     test_transforms_centcrop = transforms.Compose([transforms.Resize(280),
                                                     transforms.CenterCrop(224),
-                                                    transforms.ToTensor(), 
+                                                    transforms.ToTensor(),
                                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ##################
@@ -555,20 +617,26 @@ if __name__=='__main__':
         torch.nn.Linear(convo_output_num_features, 20),
         torch.nn.Sigmoid()
     )
+    
+    if train_test:
+        params['model'] = model_ft
+        params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
+        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
+        # Train model
+        train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
+        print(f'Time Taken: {dt.datetime.now()-start_time}')
 
-    params['model'] = model_ft
-    params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
-    params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
-
-    # Train model
-    train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
-
+    if find_scoring_images:
     # Get filepath
-    validation_results = np.load(validation_results_fp, allow_pickle = True)
-    output_results, pic_filepaths = validation_results.files
-    pic_filepaths = validation_results[pic_filepaths]
-    output_results = validation_results[output_results]
-    pic_filepaths = np.hstack(pic_filepaths)
+        validation_results = np.load(validation_results_fp, allow_pickle = True)
+        output_results, pic_filepaths = validation_results.files
+        pic_filepaths = validation_results[pic_filepaths]
+        output_results = validation_results[output_results]
+        pic_filepaths = np.hstack(pic_filepaths)
 
     for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
         save_pic(output_results, pic_filepaths, label)
+
+    if get_tail_acc:
+        # Plot Tail Acct
+        plot_tail_acc(model_ft, valid_dl, save_weights_fp)
