@@ -433,8 +433,7 @@ def train_test_model(train_dataloader,
         except:
             raise ImportError('Model weights do not exist')
 
-def get_max_min_results(label):
-    
+def get_max_min_results(label): 
     labels = [
         'aeroplane', 'bicycle', 'bird', 'boat',
         'bottle', 'bus', 'car', 'cat', 'chair',
@@ -459,7 +458,7 @@ def get_max_min_results(label):
     
     return max_result_args, max_result, min_result_args, min_result
 
-def save_pic(output_results, pic_filepaths, label):
+def save_top_pic(output_results, pic_filepaths, label):
     max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
     max_filenames = list(max_result_args)
     min_filenames = list(min_result_args)
@@ -468,107 +467,124 @@ def save_pic(output_results, pic_filepaths, label):
     if not os.path.exists(cwd+'/topbot5/'):
         os.makedirs(cwd+'/topbot5/')
     fig,ax = plt.subplots(1,5)
-    figsize=(15,8)
-    dpi=150
+    figsize=(15,3)
+    dpi=300
     fig.set_size_inches(figsize)
     fig.set_dpi = dpi
     
     for i in range(len(max_filenames)):
         with open(max_filenames[i],'rb') as f:
             image=Image.open(f)
-            ax[0][i].imshow(image)
-            ax[0,i].axis('off')
+            ax[i].imshow(image)
+            ax[i].axis('off')
     fig.suptitle(f'Top 5 pictures for {label}')
     fig.savefig(f'{cwd}/topbot5/{label}_top5.png', dpi=fig.dpi)
+    
+def save_bot_pic(output_results, pic_filepaths, label):
+    max_result_args, max_result, min_result_args, min_result = get_max_min_results(label)
+    max_filenames = list(max_result_args)
+    min_filenames = list(min_result_args)
+
+    cwd = os.getcwd()
+    if not os.path.exists(cwd+'/topbot5/'):
+        os.makedirs(cwd+'/topbot5/')
+    fig,ax = plt.subplots(1,5)
+    figsize=(15,3)
+    dpi=300
+    fig.set_size_inches(figsize)
+    fig.set_dpi = dpi
 
     for i in range(len(min_filenames)):
-        with open(filenames[i],'rb') as f:
+        with open(min_filenames[i],'rb') as f:
             image=Image.open(f)
-            ax[0][i].imshow(image)
-            ax[0,i].axis('off')
+            ax[i].imshow(image)
+            ax[i].axis('off')
     fig.suptitle(f'Bottom 5 pictures for {label}')
     fig.savefig(f'{cwd}/topbot5/{label}_botom5.png', dpi=fig.dpi)
 
 if __name__=='__main__':
-    project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
 
-    # Set filepaths
-    trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
-    test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
+    for lr in [0.001, 0.002, 0.003]:
+        project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
 
-    # Set save destinations
-    save_weights_fp = os.path.join(project_dir, f"model_weights/model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
-    validation_results_fp = os.path.join(project_dir,f"predictions/validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
-    predictions_fp = os.path.join(project_dir, f"predictions/test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
+        # Set filepaths
+        trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
+        test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
 
-    # Set params, optimiser, loss and scheduler
-    params = dict(
-        train_model = True,
-        predict_on_test = True,
-        verbose = True,
-        batch_size = 4,
-        no_classes = 20,
-        learning_rate = 0.005,
-        num_epochs = 10,
-        threshold = 0.5,
-        criterion = torch.nn.BCELoss(),
-        save_weights_fp = save_weights_fp,
-        predictions_fp = predictions_fp,
-        validation_results_fp = validation_results_fp
-    )
+        # Set save destinations
+        save_weights_fp = os.path.join(project_dir, f"model_weights/model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
+        validation_results_fp = os.path.join(project_dir,f"predictions/validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
+        predictions_fp = os.path.join(project_dir, f"predictions/test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
 
-    # Set transforms
-    train_transforms_centcrop = transforms.Compose([transforms.Resize(280),
-                                                    transforms.RandomCrop(224),
-                                                    transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),
-                                                    transforms.RandomRotation(20),
-                                                    transforms.RandomHorizontalFlip(p=0.5),
-                                                    transforms.RandomVerticalFlip(p=0.5),
-                                                    transforms.RandomAffine(20),
-                                                    transforms.RandomGrayscale(p=0.1),
-                                                    transforms.ToTensor(), 
-                                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    
-    test_transforms_centcrop = transforms.Compose([transforms.Resize(280),
-                                                    transforms.CenterCrop(224),
-                                                    transforms.ToTensor(), 
-                                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+        # Set params, optimiser, loss and scheduler
+        params = dict(
+            train_model = True,
+            predict_on_test = True,
+            verbose = True,
+            batch_size = 4,
+            no_classes = 20,
+            learning_rate = lr,
+            num_epochs = 10,
+            threshold = 0.5,
+            criterion = torch.nn.BCELoss(),
+            save_weights_fp = save_weights_fp,
+            predictions_fp = predictions_fp,
+            validation_results_fp = validation_results_fp
+        )
 
-    ##################
-    # Load dataloaders
-    if params['verbose']:
-        print('Loading data...')
-    train_dl, valid_dl, test_dl = prepare_data(batch_size = params['batch_size'], train_transforms = train_transforms_centcrop, test_transforms = test_transforms_centcrop, trainval_filepath = trainval_fp, test_filepath = test_fp)
+        # Set transforms
+        train_transforms_centcrop = transforms.Compose([transforms.Resize(280),
+                                                        transforms.RandomCrop(224),
+                                                        transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),
+                                                        transforms.RandomRotation(20),
+                                                        transforms.RandomHorizontalFlip(p=0.5),
+                                                        transforms.RandomVerticalFlip(p=0.5),
+                                                        transforms.RandomAffine(20),
+                                                        transforms.RandomGrayscale(p=0.1),
+                                                        transforms.ToTensor(), 
+                                                        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+        
+        test_transforms_centcrop = transforms.Compose([transforms.Resize(280),
+                                                        transforms.CenterCrop(224),
+                                                        transforms.ToTensor(), 
+                                                        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
-    ##################
-    # Initialise model
-    #model_ft = models.resnet18(pretrained=True)
-    #convo_output_num_features = model_ft.fc.in_features
+        ##################
+        # Load dataloaders
+        if params['verbose']:
+            print('Loading data...')
+        train_dl, valid_dl, test_dl = prepare_data(batch_size = params['batch_size'], train_transforms = train_transforms_centcrop, test_transforms = test_transforms_centcrop, trainval_filepath = trainval_fp, test_filepath = test_fp)
 
-    model_ft = models.densenet121(pretrained=True)
-    convo_output_num_features = model_ft.classifier.in_features
+        ##################
+        # Initialise model
+        #model_ft = models.resnet18(pretrained=True)
+        #convo_output_num_features = model_ft.fc.in_features
 
-    for param in model_ft.parameters():
-        param.requires_grad = False
+        model_ft = models.densenet121(pretrained=True)
+        convo_output_num_features = model_ft.classifier.in_features
 
-    model_ft.classifier = torch.nn.Sequential(
-        torch.nn.Linear(convo_output_num_features, 20),
-        torch.nn.Sigmoid()
-    )
+        for param in model_ft.parameters():
+            param.requires_grad = False
 
-    params['model'] = model_ft
-    params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
-    params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
+        model_ft.classifier = torch.nn.Sequential(
+            torch.nn.Linear(convo_output_num_features, 20),
+            torch.nn.Sigmoid()
+        )
 
-    # Train model
-    train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
+        params['model'] = model_ft
+        params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
+        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[5], gamma=0.1)
 
-    # Get filepath
-    validation_results = np.load(validation_results_fp, allow_pickle = True)
-    output_results, pic_filepaths = validation_results.files
-    pic_filepaths = validation_results[pic_filepaths]
-    output_results = validation_results[output_results]
-    pic_filepaths = np.hstack(pic_filepaths)
+        # Train model
+        train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
 
-    for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
-        save_pic(output_results, pic_filepaths, label)
+        # Get filepath
+        validation_results = np.load(validation_results_fp, allow_pickle = True)
+        output_results, pic_filepaths = validation_results.files
+        pic_filepaths = validation_results[pic_filepaths]
+        output_results = validation_results[output_results]
+        pic_filepaths = np.hstack(pic_filepaths)
+
+        for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
+            save_top_pic(output_results, pic_filepaths, label)
+            save_bot_pic(output_results, pic_filepaths, label)
