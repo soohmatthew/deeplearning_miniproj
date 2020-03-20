@@ -269,7 +269,7 @@ def trainModel(train_dataloader,
                 device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
                 print_batch_results = False,
                 print_classwise_results = False,
-                epoch_start_train_full_model = 0):
+                epoch_start_train_full_model = 100):
     if torch.cuda.is_available():
         model.cuda()
 
@@ -352,14 +352,12 @@ def trainModel(train_dataloader,
         ax[0].plot(losses_epoch_training, color = 'skyblue', label="Training Loss")
         ax[0].plot(losses_epoch_val, color = 'orange', label = "Validation Loss")
         ax[0].legend()
-        ax[0].set_xticks(range(num_epochs))
 
         ax[1].set_title('Measure Value')
         ax[1].plot(measure_epoch_training, color = 'skyblue', label="Training Measure")
         ax[1].plot(measure_epoch_val, color = 'orange', label="Validation Measure")
         ax[1].legend()
-        ax[1].set_xticks(range(num_epochs))
-
+        
         cwd = os.getcwd()
         if not os.path.exists(cwd+'/plots/'):
             os.makedirs(cwd+'/plots/')
@@ -601,7 +599,6 @@ if __name__=='__main__':
     # Set transforms
     train_transforms_centcrop = transforms.Compose([transforms.Resize(280),
                                                     transforms.RandomCrop(224),
-                                                    transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),
                                                     transforms.RandomRotation(20),
                                                     transforms.RandomHorizontalFlip(p=0.5),
                                                     transforms.RandomVerticalFlip(p=0.5),
@@ -633,7 +630,9 @@ if __name__=='__main__':
         param.requires_grad = False
 
     model_ft.classifier = torch.nn.Sequential(
-        torch.nn.Linear(convo_output_num_features, 20),
+        torch.nn.Linear(convo_output_num_features, 1000),
+        torch.nn.ReLU(),
+        torch.nn.Linear(1000, 20),
         torch.nn.Sigmoid()
     )
     
