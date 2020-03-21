@@ -1,0 +1,1252 @@
+Training Log for DenseNet on Sat_Mar_21_014958_2020
+Average Training Loss for epoch 0: 0.197
+Average Training Performance Measure for epoch 0: 0.421
+Classwise Precision Scores for epoch 0
+Class: aeroplane, Precision Score: 0.8520833333333332
+Class: bicycle, Precision Score: 0.28435114503816794
+Class: bird, Precision Score: 0.4512077294685991
+Class: boat, Precision Score: 0.2993421052631579
+Class: bottle, Precision Score: 0.27176220806794055
+Class: bus, Precision Score: 0.2721354166666667
+Class: car, Precision Score: 0.5077866136514247
+Class: cat, Precision Score: 0.8822831978319783
+Class: chair, Precision Score: 0.4890998593530239
+Class: cow, Precision Score: 0.25675675675675674
+Class: diningtable, Precision Score: 0.26877470355731226
+Class: dog, Precision Score: 0.4163727219282775
+Class: horse, Precision Score: 0.5866228070175439
+Class: motorbike, Precision Score: 0.5630252100840336
+Class: person, Precision Score: 0.7692561205273069
+Class: pottedplant, Precision Score: 0.2698744769874477
+Class: sheep, Precision Score: 0.2655172413793103
+Class: sofa, Precision Score: 0.2717391304347826
+Class: train, Precision Score: 0.35384615384615387
+Class: tvmonitor, Precision Score: 0.3141509433962264
+Average Validation Loss for epoch 0: 0.134
+Validation Performance Measure for epoch 0: 0.522
+Average Training Loss for epoch 1: 0.171
+Average Training Performance Measure for epoch 1: 0.502
+Classwise Precision Scores for epoch 1
+Class: aeroplane, Precision Score: 0.8734375
+Class: bicycle, Precision Score: 0.5365776081424937
+Class: bird, Precision Score: 0.7647342995169082
+Class: boat, Precision Score: 0.4345760233918129
+Class: bottle, Precision Score: 0.2789278131634819
+Class: bus, Precision Score: 0.3072916666666667
+Class: car, Precision Score: 0.6903578528827038
+Class: cat, Precision Score: 0.7596544715447154
+Class: chair, Precision Score: 0.4994725738396624
+Class: cow, Precision Score: 0.30236486486486486
+Class: diningtable, Precision Score: 0.274703557312253
+Class: dog, Precision Score: 0.8276014109347445
+Class: horse, Precision Score: 0.5548245614035088
+Class: motorbike, Precision Score: 0.7436974789915967
+Class: person, Precision Score: 0.7731873822975515
+Class: pottedplant, Precision Score: 0.2698744769874477
+Class: sheep, Precision Score: 0.506896551724138
+Class: sofa, Precision Score: 0.39456521739130435
+Class: train, Precision Score: 0.7009615384615384
+Class: tvmonitor, Precision Score: 0.5764150943396227
+Average Validation Loss for epoch 1: 0.118
+Validation Performance Measure for epoch 1: 0.633
+Average Training Loss for epoch 2: 0.163
+Average Training Performance Measure for epoch 2: 0.536
+Classwise Precision Scores for epoch 2
+Class: aeroplane, Precision Score: 0.93046875
+Class: bicycle, Precision Score: 0.6129134860050891
+Class: bird, Precision Score: 0.6835748792270531
+Class: boat, Precision Score: 0.6363304093567251
+Class: bottle, Precision Score: 0.3673036093418259
+Class: bus, Precision Score: 0.8732638888888888
+Class: car, Precision Score: 0.692180251822399
+Class: cat, Precision Score: 0.8633130081300813
+Class: chair, Precision Score: 0.4732770745428974
+Class: cow, Precision Score: 0.2939189189189189
+Class: diningtable, Precision Score: 0.4901185770750988
+Class: dog, Precision Score: 0.8084950029394474
+Class: horse, Precision Score: 0.7467105263157895
+Class: motorbike, Precision Score: 0.6911764705882353
+Class: person, Precision Score: 0.7437853107344632
+Class: pottedplant, Precision Score: 0.28556485355648537
+Class: sheep, Precision Score: 0.3931034482758621
+Class: sofa, Precision Score: 0.3739130434782609
+Class: train, Precision Score: 0.5528846153846154
+Class: tvmonitor, Precision Score: 0.39528301886792455
+Average Validation Loss for epoch 2: 0.115
+Validation Performance Measure for epoch 2: 0.656
+Average Training Loss for epoch 3: 0.158
+Average Training Performance Measure for epoch 3: 0.552
+Classwise Precision Scores for epoch 3
+Class: aeroplane, Precision Score: 0.8859375
+Class: bicycle, Precision Score: 0.7496819338422391
+Class: bird, Precision Score: 0.7234299516908212
+Class: boat, Precision Score: 0.6904239766081872
+Class: bottle, Precision Score: 0.3569532908704883
+Class: bus, Precision Score: 0.8355034722222222
+Class: car, Precision Score: 0.6643472498343274
+Class: cat, Precision Score: 0.8307926829268293
+Class: chair, Precision Score: 0.4590365682137834
+Class: cow, Precision Score: 0.2922297297297297
+Class: diningtable, Precision Score: 0.5079051383399209
+Class: dog, Precision Score: 0.834950029394474
+Class: horse, Precision Score: 0.6699561403508771
+Class: motorbike, Precision Score: 0.7279411764705882
+Class: person, Precision Score: 0.7981403013182672
+Class: pottedplant, Precision Score: 0.3410041841004184
+Class: sheep, Precision Score: 0.6959770114942528
+Class: sofa, Precision Score: 0.33804347826086956
+Class: train, Precision Score: 0.8673076923076923
+Class: tvmonitor, Precision Score: 0.589622641509434
+Average Validation Loss for epoch 3: 0.107
+Validation Performance Measure for epoch 3: 0.693
+Average Training Loss for epoch 4: 0.156
+Average Training Performance Measure for epoch 4: 0.567
+Classwise Precision Scores for epoch 4
+Class: aeroplane, Precision Score: 0.9265625
+Class: bicycle, Precision Score: 0.7334605597964378
+Class: bird, Precision Score: 0.7792270531400965
+Class: boat, Precision Score: 0.6750730994152048
+Class: bottle, Precision Score: 0.5313163481953291
+Class: bus, Precision Score: 0.8181423611111112
+Class: car, Precision Score: 0.560470510271703
+Class: cat, Precision Score: 0.8577235772357723
+Class: chair, Precision Score: 0.520745428973277
+Class: cow, Precision Score: 0.34290540540540543
+Class: diningtable, Precision Score: 0.6116600790513834
+Class: dog, Precision Score: 0.7718988830099942
+Class: horse, Precision Score: 0.6776315789473685
+Class: motorbike, Precision Score: 0.6859243697478992
+Class: person, Precision Score: 0.7247175141242936
+Class: pottedplant, Precision Score: 0.3713389121338912
+Class: sheep, Precision Score: 0.521264367816092
+Class: sofa, Precision Score: 0.3065217391304348
+Class: train, Precision Score: 0.8903846153846153
+Class: tvmonitor, Precision Score: 0.7028301886792453
+Average Validation Loss for epoch 4: 0.109
+Validation Performance Measure for epoch 4: 0.689
+Average Training Loss for epoch 5: 0.152
+Average Training Performance Measure for epoch 5: 0.581
+Classwise Precision Scores for epoch 5
+Class: aeroplane, Precision Score: 0.9046875
+Class: bicycle, Precision Score: 0.611323155216285
+Class: bird, Precision Score: 0.779951690821256
+Class: boat, Precision Score: 0.7171052631578947
+Class: bottle, Precision Score: 0.51671974522293
+Class: bus, Precision Score: 0.8546006944444445
+Class: car, Precision Score: 0.6439695162359179
+Class: cat, Precision Score: 0.8824525745257453
+Class: chair, Precision Score: 0.40189873417721517
+Class: cow, Precision Score: 0.28716216216216217
+Class: diningtable, Precision Score: 0.42391304347826086
+Class: dog, Precision Score: 0.7501469723691947
+Class: horse, Precision Score: 0.8234649122807017
+Class: motorbike, Precision Score: 0.8004201680672269
+Class: person, Precision Score: 0.735969868173258
+Class: pottedplant, Precision Score: 0.5645048814504883
+Class: sheep, Precision Score: 0.4482758620689655
+Class: sofa, Precision Score: 0.30543478260869567
+Class: train, Precision Score: 0.7192307692307692
+Class: tvmonitor, Precision Score: 0.7273584905660377
+Average Validation Loss for epoch 5: 0.114
+Validation Performance Measure for epoch 5: 0.687
+Average Training Loss for epoch 6: 0.152
+Average Training Performance Measure for epoch 6: 0.581
+Classwise Precision Scores for epoch 6
+Class: aeroplane, Precision Score: 0.88671875
+Class: bicycle, Precision Score: 0.7375954198473282
+Class: bird, Precision Score: 0.7277777777777777
+Class: boat, Precision Score: 0.7595029239766082
+Class: bottle, Precision Score: 0.5326433121019108
+Class: bus, Precision Score: 0.8624131944444445
+Class: car, Precision Score: 0.5599734923790589
+Class: cat, Precision Score: 0.7947154471544715
+Class: chair, Precision Score: 0.5638185654008439
+Class: cow, Precision Score: 0.38682432432432434
+Class: diningtable, Precision Score: 0.5573122529644269
+Class: dog, Precision Score: 0.8383303938859495
+Class: horse, Precision Score: 0.7105263157894737
+Class: motorbike, Precision Score: 0.7142857142857143
+Class: person, Precision Score: 0.7823681732580035
+Class: pottedplant, Precision Score: 0.6209902370990238
+Class: sheep, Precision Score: 0.5689655172413793
+Class: sofa, Precision Score: 0.5304347826086957
+Class: train, Precision Score: 0.8096153846153846
+Class: tvmonitor, Precision Score: 0.6632075471698113
+Average Validation Loss for epoch 6: 0.109
+Validation Performance Measure for epoch 6: 0.716
+Average Training Loss for epoch 7: 0.152
+Average Training Performance Measure for epoch 7: 0.580
+Classwise Precision Scores for epoch 7
+Class: aeroplane, Precision Score: 0.8640625
+Class: bicycle, Precision Score: 0.6141857506361322
+Class: bird, Precision Score: 0.6855072463768116
+Class: boat, Precision Score: 0.7927631578947368
+Class: bottle, Precision Score: 0.6170382165605095
+Class: bus, Precision Score: 0.6744791666666666
+Class: car, Precision Score: 0.7407223326706429
+Class: cat, Precision Score: 0.8595867208672087
+Class: chair, Precision Score: 0.36251758087201125
+Class: cow, Precision Score: 0.4814189189189189
+Class: diningtable, Precision Score: 0.4901185770750988
+Class: dog, Precision Score: 0.8256907701352146
+Class: horse, Precision Score: 0.7160087719298246
+Class: motorbike, Precision Score: 0.5567226890756303
+Class: person, Precision Score: 0.7668785310734461
+Class: pottedplant, Precision Score: 0.46548117154811713
+Class: sheep, Precision Score: 0.5919540229885059
+Class: sofa, Precision Score: 0.36086956521739133
+Class: train, Precision Score: 0.7730769230769231
+Class: tvmonitor, Precision Score: 0.619811320754717
+Average Validation Loss for epoch 7: 0.121
+Validation Performance Measure for epoch 7: 0.691
+Average Training Loss for epoch 8: 0.149
+Average Training Performance Measure for epoch 8: 0.590
+Classwise Precision Scores for epoch 8
+Class: aeroplane, Precision Score: 0.90390625
+Class: bicycle, Precision Score: 0.714058524173028
+Class: bird, Precision Score: 0.6857487922705313
+Class: boat, Precision Score: 0.7975146198830408
+Class: bottle, Precision Score: 0.679140127388535
+Class: bus, Precision Score: 0.8298611111111112
+Class: car, Precision Score: 0.6840622929092114
+Class: cat, Precision Score: 0.7693089430894309
+Class: chair, Precision Score: 0.41121659634317864
+Class: cow, Precision Score: 0.44763513513513514
+Class: diningtable, Precision Score: 0.5
+Class: dog, Precision Score: 0.8377425044091712
+Class: horse, Precision Score: 0.7324561403508771
+Class: motorbike, Precision Score: 0.8480392156862745
+Class: person, Precision Score: 0.729237288135593
+Class: pottedplant, Precision Score: 0.37343096234309625
+Class: sheep, Precision Score: 0.5902298850574713
+Class: sofa, Precision Score: 0.39601449275362316
+Class: train, Precision Score: 0.875
+Class: tvmonitor, Precision Score: 0.6886792452830188
+Average Validation Loss for epoch 8: 0.116
+Validation Performance Measure for epoch 8: 0.705
+Average Training Loss for epoch 9: 0.147
+Average Training Performance Measure for epoch 9: 0.593
+Classwise Precision Scores for epoch 9
+Class: aeroplane, Precision Score: 0.9015625
+Class: bicycle, Precision Score: 0.6399491094147582
+Class: bird, Precision Score: 0.7458937198067632
+Class: boat, Precision Score: 0.75
+Class: bottle, Precision Score: 0.6868365180467091
+Class: bus, Precision Score: 0.8819444444444445
+Class: car, Precision Score: 0.6625248508946322
+Class: cat, Precision Score: 0.8692411924119242
+Class: chair, Precision Score: 0.3888888888888889
+Class: cow, Precision Score: 0.4341216216216216
+Class: diningtable, Precision Score: 0.4990118577075099
+Class: dog, Precision Score: 0.8245149911816579
+Class: horse, Precision Score: 0.7894736842105263
+Class: motorbike, Precision Score: 0.8280812324929973
+Class: person, Precision Score: 0.7245056497175139
+Class: pottedplant, Precision Score: 0.46338912133891214
+Class: sheep, Precision Score: 0.6614942528735631
+Class: sofa, Precision Score: 0.39565217391304347
+Class: train, Precision Score: 0.7980769230769231
+Class: tvmonitor, Precision Score: 0.6481132075471698
+Average Validation Loss for epoch 9: 0.117
+Validation Performance Measure for epoch 9: 0.710
+Average Training Loss for epoch 10: 0.147
+Average Training Performance Measure for epoch 10: 0.595
+Classwise Precision Scores for epoch 10
+Class: aeroplane, Precision Score: 0.8390625
+Class: bicycle, Precision Score: 0.7430025445292621
+Class: bird, Precision Score: 0.7596618357487922
+Class: boat, Precision Score: 0.7182017543859649
+Class: bottle, Precision Score: 0.5469745222929936
+Class: bus, Precision Score: 0.9058159722222222
+Class: car, Precision Score: 0.6916832339297548
+Class: cat, Precision Score: 0.8672086720867209
+Class: chair, Precision Score: 0.3310478199718706
+Class: cow, Precision Score: 0.2922297297297297
+Class: diningtable, Precision Score: 0.4041501976284585
+Class: dog, Precision Score: 0.8492063492063492
+Class: horse, Precision Score: 0.8070175438596491
+Class: motorbike, Precision Score: 0.6544117647058824
+Class: person, Precision Score: 0.7883709981167605
+Class: pottedplant, Precision Score: 0.45502092050209203
+Class: sheep, Precision Score: 0.6051724137931035
+Class: sofa, Precision Score: 0.508695652173913
+Class: train, Precision Score: 0.8192307692307692
+Class: tvmonitor, Precision Score: 0.6566037735849056
+Average Validation Loss for epoch 10: 0.115
+Validation Performance Measure for epoch 10: 0.707
+Average Training Loss for epoch 11: 0.145
+Average Training Performance Measure for epoch 11: 0.603
+Classwise Precision Scores for epoch 11
+Class: aeroplane, Precision Score: 0.88515625
+Class: bicycle, Precision Score: 0.7328244274809159
+Class: bird, Precision Score: 0.7763285024154589
+Class: boat, Precision Score: 0.7942251461988303
+Class: bottle, Precision Score: 0.6223460721868365
+Class: bus, Precision Score: 0.69140625
+Class: car, Precision Score: 0.7117296222664016
+Class: cat, Precision Score: 0.8428184281842819
+Class: chair, Precision Score: 0.5341068917018283
+Class: cow, Precision Score: 0.3614864864864865
+Class: diningtable, Precision Score: 0.5592885375494071
+Class: dog, Precision Score: 0.8439153439153441
+Class: horse, Precision Score: 0.643640350877193
+Class: motorbike, Precision Score: 0.780812324929972
+Class: person, Precision Score: 0.7375941619585683
+Class: pottedplant, Precision Score: 0.5062761506276151
+Class: sheep, Precision Score: 0.7143678160919541
+Class: sofa, Precision Score: 0.5184782608695652
+Class: train, Precision Score: 0.9134615384615384
+Class: tvmonitor, Precision Score: 0.7056603773584905
+Average Validation Loss for epoch 11: 0.112
+Validation Performance Measure for epoch 11: 0.729
+Average Training Loss for epoch 12: 0.146
+Average Training Performance Measure for epoch 12: 0.606
+Classwise Precision Scores for epoch 12
+Class: aeroplane, Precision Score: 0.91015625
+Class: bicycle, Precision Score: 0.6714376590330788
+Class: bird, Precision Score: 0.7632850241545893
+Class: boat, Precision Score: 0.738669590643275
+Class: bottle, Precision Score: 0.6154458598726115
+Class: bus, Precision Score: 0.9136284722222222
+Class: car, Precision Score: 0.5773691186216037
+Class: cat, Precision Score: 0.8316395663956639
+Class: chair, Precision Score: 0.4817158931082982
+Class: cow, Precision Score: 0.6441441441441441
+Class: diningtable, Precision Score: 0.5652173913043478
+Class: dog, Precision Score: 0.8400940623162845
+Class: horse, Precision Score: 0.7510964912280702
+Class: motorbike, Precision Score: 0.7930672268907563
+Class: person, Precision Score: 0.7857109227871939
+Class: pottedplant, Precision Score: 0.5115062761506276
+Class: sheep, Precision Score: 0.5695402298850576
+Class: sofa, Precision Score: 0.48731884057971014
+Class: train, Precision Score: 0.8990384615384616
+Class: tvmonitor, Precision Score: 0.659433962264151
+Average Validation Loss for epoch 12: 0.109
+Validation Performance Measure for epoch 12: 0.728
+Average Training Loss for epoch 13: 0.143
+Average Training Performance Measure for epoch 13: 0.610
+Classwise Precision Scores for epoch 13
+Class: aeroplane, Precision Score: 0.91953125
+Class: bicycle, Precision Score: 0.7503180661577608
+Class: bird, Precision Score: 0.8589371980676328
+Class: boat, Precision Score: 0.7741228070175439
+Class: bottle, Precision Score: 0.684447983014862
+Class: bus, Precision Score: 0.8563368055555555
+Class: car, Precision Score: 0.6567263088137839
+Class: cat, Precision Score: 0.8702574525745258
+Class: chair, Precision Score: 0.564873417721519
+Class: cow, Precision Score: 0.5050675675675675
+Class: diningtable, Precision Score: 0.6294466403162056
+Class: dog, Precision Score: 0.8306878306878307
+Class: horse, Precision Score: 0.7741228070175439
+Class: motorbike, Precision Score: 0.8333333333333334
+Class: person, Precision Score: 0.755885122410546
+Class: pottedplant, Precision Score: 0.46443514644351463
+Class: sheep, Precision Score: 0.5568965517241379
+Class: sofa, Precision Score: 0.43369565217391304
+Class: train, Precision Score: 0.8865384615384615
+Class: tvmonitor, Precision Score: 0.7
+Average Validation Loss for epoch 13: 0.106
+Validation Performance Measure for epoch 13: 0.746
+Average Training Loss for epoch 14: 0.144
+Average Training Performance Measure for epoch 14: 0.600
+Classwise Precision Scores for epoch 14
+Class: aeroplane, Precision Score: 0.89609375
+Class: bicycle, Precision Score: 0.799618320610687
+Class: bird, Precision Score: 0.8386473429951691
+Class: boat, Precision Score: 0.8183479532163742
+Class: bottle, Precision Score: 0.6640127388535032
+Class: bus, Precision Score: 0.8680555555555555
+Class: car, Precision Score: 0.681742876076872
+Class: cat, Precision Score: 0.8727981029810299
+Class: chair, Precision Score: 0.5409634317862166
+Class: cow, Precision Score: 0.41385135135135137
+Class: diningtable, Precision Score: 0.5879446640316206
+Class: dog, Precision Score: 0.7974720752498532
+Class: horse, Precision Score: 0.8866959064327486
+Class: motorbike, Precision Score: 0.7608543417366948
+Class: person, Precision Score: 0.7960216572504707
+Class: pottedplant, Precision Score: 0.5251046025104602
+Class: sheep, Precision Score: 0.624712643678161
+Class: sofa, Precision Score: 0.5684782608695652
+Class: train, Precision Score: 0.8788461538461538
+Class: tvmonitor, Precision Score: 0.6632075471698113
+Average Validation Loss for epoch 14: 0.107
+Validation Performance Measure for epoch 14: 0.756
+Average Training Loss for epoch 15: 0.152
+Average Training Performance Measure for epoch 15: 0.590
+Classwise Precision Scores for epoch 15
+Class: aeroplane, Precision Score: 0.865625
+Class: bicycle, Precision Score: 0.7544529262086515
+Class: bird, Precision Score: 0.8099033816425121
+Class: boat, Precision Score: 0.7858187134502925
+Class: bottle, Precision Score: 0.6234076433121019
+Class: bus, Precision Score: 0.8532986111111112
+Class: car, Precision Score: 0.6146454605699138
+Class: cat, Precision Score: 0.8446815718157181
+Class: chair, Precision Score: 0.4790787623066104
+Class: cow, Precision Score: 0.4577702702702703
+Class: diningtable, Precision Score: 0.4990118577075099
+Class: dog, Precision Score: 0.7776308054085831
+Class: horse, Precision Score: 0.7850877192982456
+Class: motorbike, Precision Score: 0.6638655462184874
+Class: person, Precision Score: 0.7753531073446324
+Class: pottedplant, Precision Score: 0.5669456066945606
+Class: sheep, Precision Score: 0.7505747126436783
+Class: sofa, Precision Score: 0.4434782608695652
+Class: train, Precision Score: 0.7798076923076923
+Class: tvmonitor, Precision Score: 0.720754716981132
+Average Validation Loss for epoch 15: 0.131
+Validation Performance Measure for epoch 15: 0.720
+Average Training Loss for epoch 16: 0.146
+Average Training Performance Measure for epoch 16: 0.594
+Classwise Precision Scores for epoch 16
+Class: aeroplane, Precision Score: 0.90234375
+Class: bicycle, Precision Score: 0.7709923664122137
+Class: bird, Precision Score: 0.7294685990338164
+Class: boat, Precision Score: 0.6984649122807017
+Class: bottle, Precision Score: 0.5719214437367304
+Class: bus, Precision Score: 0.8094618055555557
+Class: car, Precision Score: 0.5999005964214712
+Class: cat, Precision Score: 0.8387533875338753
+Class: chair, Precision Score: 0.5991561181434599
+Class: cow, Precision Score: 0.5067567567567568
+Class: diningtable, Precision Score: 0.6353754940711462
+Class: dog, Precision Score: 0.7626396237507349
+Class: horse, Precision Score: 0.75
+Class: motorbike, Precision Score: 0.8165266106442577
+Class: person, Precision Score: 0.7802024482109224
+Class: pottedplant, Precision Score: 0.5920502092050209
+Class: sheep, Precision Score: 0.6057471264367816
+Class: sofa, Precision Score: 0.525
+Class: train, Precision Score: 0.8269230769230769
+Class: tvmonitor, Precision Score: 0.7628930817610062
+Average Validation Loss for epoch 16: 0.138
+Validation Performance Measure for epoch 16: 0.731
+Average Training Loss for epoch 17: 0.142
+Average Training Performance Measure for epoch 17: 0.614
+Classwise Precision Scores for epoch 17
+Class: aeroplane, Precision Score: 0.9067708333333334
+Class: bicycle, Precision Score: 0.770674300254453
+Class: bird, Precision Score: 0.7917874396135266
+Class: boat, Precision Score: 0.7145467836257311
+Class: bottle, Precision Score: 0.5666135881104034
+Class: bus, Precision Score: 0.8563368055555555
+Class: car, Precision Score: 0.6048707753479126
+Class: cat, Precision Score: 0.8418021680216803
+Class: chair, Precision Score: 0.6645569620253166
+Class: cow, Precision Score: 0.5760135135135135
+Class: diningtable, Precision Score: 0.6343873517786561
+Class: dog, Precision Score: 0.7846854791299236
+Class: horse, Precision Score: 0.7225877192982456
+Class: motorbike, Precision Score: 0.7710084033613446
+Class: person, Precision Score: 0.7950800376647831
+Class: pottedplant, Precision Score: 0.5418410041841004
+Class: sheep, Precision Score: 0.6275862068965518
+Class: sofa, Precision Score: 0.575
+Class: train, Precision Score: 0.8817307692307692
+Class: tvmonitor, Precision Score: 0.7566037735849057
+Average Validation Loss for epoch 17: 0.131
+Validation Performance Measure for epoch 17: 0.746
+Average Training Loss for epoch 18: 0.136
+Average Training Performance Measure for epoch 18: 0.623
+Classwise Precision Scores for epoch 18
+Class: aeroplane, Precision Score: 0.8606770833333334
+Class: bicycle, Precision Score: 0.7353689567430026
+Class: bird, Precision Score: 0.7410628019323672
+Class: boat, Precision Score: 0.6926169590643275
+Class: bottle, Precision Score: 0.6202229299363057
+Class: bus, Precision Score: 0.8875868055555555
+Class: car, Precision Score: 0.6095096090125911
+Class: cat, Precision Score: 0.7914972899728998
+Class: chair, Precision Score: 0.6075949367088608
+Class: cow, Precision Score: 0.4543918918918919
+Class: diningtable, Precision Score: 0.6254940711462451
+Class: dog, Precision Score: 0.7933568489124045
+Class: horse, Precision Score: 0.8026315789473685
+Class: motorbike, Precision Score: 0.805672268907563
+Class: person, Precision Score: 0.7961158192090392
+Class: pottedplant, Precision Score: 0.5840306834030684
+Class: sheep, Precision Score: 0.8459770114942529
+Class: sofa, Precision Score: 0.6840579710144928
+Class: train, Precision Score: 0.8432692307692308
+Class: tvmonitor, Precision Score: 0.8226415094339623
+Average Validation Loss for epoch 18: 0.136
+Validation Performance Measure for epoch 18: 0.749
+Average Training Loss for epoch 19: 0.134
+Average Training Performance Measure for epoch 19: 0.634
+Classwise Precision Scores for epoch 19
+Class: aeroplane, Precision Score: 0.8921875
+Class: bicycle, Precision Score: 0.7700381679389313
+Class: bird, Precision Score: 0.6830917874396136
+Class: boat, Precision Score: 0.7843567251461987
+Class: bottle, Precision Score: 0.5119426751592356
+Class: bus, Precision Score: 0.8376736111111112
+Class: car, Precision Score: 0.5811795891318754
+Class: cat, Precision Score: 0.8367208672086721
+Class: chair, Precision Score: 0.6146272855133614
+Class: cow, Precision Score: 0.6182432432432432
+Class: diningtable, Precision Score: 0.5721343873517787
+Class: dog, Precision Score: 0.7261904761904763
+Class: horse, Precision Score: 0.817251461988304
+Class: motorbike, Precision Score: 0.8084733893557423
+Class: person, Precision Score: 0.8408192090395478
+Class: pottedplant, Precision Score: 0.5648535564853556
+Class: sheep, Precision Score: 0.7540229885057471
+Class: sofa, Precision Score: 0.5909420289855073
+Class: train, Precision Score: 0.8451923076923077
+Class: tvmonitor, Precision Score: 0.730817610062893
+Average Validation Loss for epoch 19: 0.145
+Validation Performance Measure for epoch 19: 0.742
+Average Training Loss for epoch 20: 0.131
+Average Training Performance Measure for epoch 20: 0.640
+Classwise Precision Scores for epoch 20
+Class: aeroplane, Precision Score: 0.8421875
+Class: bicycle, Precision Score: 0.7111959287531807
+Class: bird, Precision Score: 0.7410628019323672
+Class: boat, Precision Score: 0.6345029239766082
+Class: bottle, Precision Score: 0.5276008492569003
+Class: bus, Precision Score: 0.8446180555555557
+Class: car, Precision Score: 0.6171305500331344
+Class: cat, Precision Score: 0.8123306233062331
+Class: chair, Precision Score: 0.6378340365682137
+Class: cow, Precision Score: 0.5557432432432432
+Class: diningtable, Precision Score: 0.6175889328063241
+Class: dog, Precision Score: 0.7516166960611406
+Class: horse, Precision Score: 0.7525584795321638
+Class: motorbike, Precision Score: 0.8126750700280112
+Class: person, Precision Score: 0.7909604519774007
+Class: pottedplant, Precision Score: 0.594839609483961
+Class: sheep, Precision Score: 0.7614942528735632
+Class: sofa, Precision Score: 0.5898550724637682
+Class: train, Precision Score: 0.8307692307692308
+Class: tvmonitor, Precision Score: 0.7141509433962264
+Average Validation Loss for epoch 20: 0.149
+Validation Performance Measure for epoch 20: 0.731
+Average Training Loss for epoch 21: 0.129
+Average Training Performance Measure for epoch 21: 0.644
+Classwise Precision Scores for epoch 21
+Class: aeroplane, Precision Score: 0.8640625
+Class: bicycle, Precision Score: 0.7649491094147584
+Class: bird, Precision Score: 0.7780193236714976
+Class: boat, Precision Score: 0.7682748538011697
+Class: bottle, Precision Score: 0.593683651804671
+Class: bus, Precision Score: 0.826388888888889
+Class: car, Precision Score: 0.601557322730285
+Class: cat, Precision Score: 0.8323170731707317
+Class: chair, Precision Score: 0.6387130801687765
+Class: cow, Precision Score: 0.5287162162162162
+Class: diningtable, Precision Score: 0.6900527009222661
+Class: dog, Precision Score: 0.7851263962375072
+Class: horse, Precision Score: 0.8125
+Class: motorbike, Precision Score: 0.7496498599439776
+Class: person, Precision Score: 0.8117231638418076
+Class: pottedplant, Precision Score: 0.6213389121338913
+Class: sheep, Precision Score: 0.7597701149425288
+Class: sofa, Precision Score: 0.6105072463768116
+Class: train, Precision Score: 0.8269230769230769
+Class: tvmonitor, Precision Score: 0.7122641509433962
+Average Validation Loss for epoch 21: 0.145
+Validation Performance Measure for epoch 21: 0.752
+Average Training Loss for epoch 22: 0.126
+Average Training Performance Measure for epoch 22: 0.653
+Classwise Precision Scores for epoch 22
+Class: aeroplane, Precision Score: 0.7953125
+Class: bicycle, Precision Score: 0.7439567430025446
+Class: bird, Precision Score: 0.7285024154589372
+Class: boat, Precision Score: 0.7883771929824562
+Class: bottle, Precision Score: 0.5788216560509554
+Class: bus, Precision Score: 0.8832465277777777
+Class: car, Precision Score: 0.619118621603711
+Class: cat, Precision Score: 0.6275406504065041
+Class: chair, Precision Score: 0.5509845288326302
+Class: cow, Precision Score: 0.5168918918918919
+Class: diningtable, Precision Score: 0.6416337285902503
+Class: dog, Precision Score: 0.7721928277483833
+Class: horse, Precision Score: 0.7280701754385965
+Class: motorbike, Precision Score: 0.7556022408963586
+Class: person, Precision Score: 0.8108757062146887
+Class: pottedplant, Precision Score: 0.5523012552301255
+Class: sheep, Precision Score: 0.724712643678161
+Class: sofa, Precision Score: 0.575
+Class: train, Precision Score: 0.8153846153846154
+Class: tvmonitor, Precision Score: 0.7245283018867924
+Average Validation Loss for epoch 22: 0.178
+Validation Performance Measure for epoch 22: 0.718
+Average Training Loss for epoch 23: 0.123
+Average Training Performance Measure for epoch 23: 0.663
+Classwise Precision Scores for epoch 23
+Class: aeroplane, Precision Score: 0.784375
+Class: bicycle, Precision Score: 0.7665394402035624
+Class: bird, Precision Score: 0.7983091787439615
+Class: boat, Precision Score: 0.7668128654970761
+Class: bottle, Precision Score: 0.6173036093418259
+Class: bus, Precision Score: 0.8693576388888888
+Class: car, Precision Score: 0.5730616302186877
+Class: cat, Precision Score: 0.8099593495934959
+Class: chair, Precision Score: 0.5617088607594937
+Class: cow, Precision Score: 0.47297297297297297
+Class: diningtable, Precision Score: 0.6442687747035574
+Class: dog, Precision Score: 0.7695473251028807
+Class: horse, Precision Score: 0.7631578947368421
+Class: motorbike, Precision Score: 0.6880252100840336
+Class: person, Precision Score: 0.8006120527306965
+Class: pottedplant, Precision Score: 0.6059972105997211
+Class: sheep, Precision Score: 0.7660919540229885
+Class: sofa, Precision Score: 0.6007246376811595
+Class: train, Precision Score: 0.801923076923077
+Class: tvmonitor, Precision Score: 0.7415094339622641
+Average Validation Loss for epoch 23: 0.149
+Validation Performance Measure for epoch 23: 0.733
+Average Training Loss for epoch 24: 0.121
+Average Training Performance Measure for epoch 24: 0.669
+Classwise Precision Scores for epoch 24
+Class: aeroplane, Precision Score: 0.8578125
+Class: bicycle, Precision Score: 0.7649491094147584
+Class: bird, Precision Score: 0.6973429951690822
+Class: boat, Precision Score: 0.7624269005847953
+Class: bottle, Precision Score: 0.5429936305732485
+Class: bus, Precision Score: 0.786892361111111
+Class: car, Precision Score: 0.5487077534791253
+Class: cat, Precision Score: 0.845528455284553
+Class: chair, Precision Score: 0.5632911392405063
+Class: cow, Precision Score: 0.6458333333333333
+Class: diningtable, Precision Score: 0.581357048748353
+Class: dog, Precision Score: 0.7611699000587889
+Class: horse, Precision Score: 0.7379385964912281
+Class: motorbike, Precision Score: 0.6859243697478992
+Class: person, Precision Score: 0.8047551789077207
+Class: pottedplant, Precision Score: 0.6063458856345887
+Class: sheep, Precision Score: 0.8385057471264368
+Class: sofa, Precision Score: 0.5778985507246378
+Class: train, Precision Score: 0.8076923076923077
+Class: tvmonitor, Precision Score: 0.6924528301886792
+Average Validation Loss for epoch 24: 0.153
+Validation Performance Measure for epoch 24: 0.726
+Training Log for DenseNet on Sat_Mar_21_055557_2020
+Average Training Loss for epoch 0: 0.197
+Average Training Performance Measure for epoch 0: 0.418
+Classwise Precision Scores for epoch 0
+Class: aeroplane, Precision Score: 0.8841145833333333
+Class: bicycle, Precision Score: 0.5384860050890585
+Class: bird, Precision Score: 0.688647342995169
+Class: boat, Precision Score: 0.28618421052631576
+Class: bottle, Precision Score: 0.2948513800424628
+Class: bus, Precision Score: 0.626736111111111
+Class: car, Precision Score: 0.4156726308813784
+Class: cat, Precision Score: 0.8109756097560976
+Class: chair, Precision Score: 0.5068565400843881
+Class: cow, Precision Score: 0.25675675675675674
+Class: diningtable, Precision Score: 0.5177865612648221
+Class: dog, Precision Score: 0.6383009994121105
+Class: horse, Precision Score: 0.49780701754385964
+Class: motorbike, Precision Score: 0.4632352941176471
+Class: person, Precision Score: 0.6193502824858755
+Class: pottedplant, Precision Score: 0.28451882845188287
+Class: sheep, Precision Score: 0.2655172413793103
+Class: sofa, Precision Score: 0.2717391304347826
+Class: train, Precision Score: 0.40192307692307694
+Class: tvmonitor, Precision Score: 0.3632075471698113
+Average Validation Loss for epoch 0: 0.134
+Validation Performance Measure for epoch 0: 0.543
+Average Training Loss for epoch 1: 0.170
+Average Training Performance Measure for epoch 1: 0.500
+Classwise Precision Scores for epoch 1
+Class: aeroplane, Precision Score: 0.88515625
+Class: bicycle, Precision Score: 0.5082697201017812
+Class: bird, Precision Score: 0.7473429951690821
+Class: boat, Precision Score: 0.27850877192982454
+Class: bottle, Precision Score: 0.27176220806794055
+Class: bus, Precision Score: 0.540798611111111
+Class: car, Precision Score: 0.6429754804506295
+Class: cat, Precision Score: 0.7982723577235772
+Class: chair, Precision Score: 0.3767580872011252
+Class: cow, Precision Score: 0.3935810810810811
+Class: diningtable, Precision Score: 0.3201581027667984
+Class: dog, Precision Score: 0.8033509700176368
+Class: horse, Precision Score: 0.8768274853801169
+Class: motorbike, Precision Score: 0.8112745098039216
+Class: person, Precision Score: 0.7433615819209038
+Class: pottedplant, Precision Score: 0.3922594142259414
+Class: sheep, Precision Score: 0.4379310344827586
+Class: sofa, Precision Score: 0.2717391304347826
+Class: train, Precision Score: 0.7644230769230769
+Class: tvmonitor, Precision Score: 0.49245283018867925
+Average Validation Loss for epoch 1: 0.122
+Validation Performance Measure for epoch 1: 0.632
+Average Training Loss for epoch 2: 0.162
+Average Training Performance Measure for epoch 2: 0.537
+Classwise Precision Scores for epoch 2
+Class: aeroplane, Precision Score: 0.84921875
+Class: bicycle, Precision Score: 0.7353689567430026
+Class: bird, Precision Score: 0.8142512077294687
+Class: boat, Precision Score: 0.5508040935672515
+Class: bottle, Precision Score: 0.3036093418259023
+Class: bus, Precision Score: 0.8415798611111112
+Class: car, Precision Score: 0.5077866136514247
+Class: cat, Precision Score: 0.796239837398374
+Class: chair, Precision Score: 0.4105133614627286
+Class: cow, Precision Score: 0.2905405405405405
+Class: diningtable, Precision Score: 0.4515810276679842
+Class: dog, Precision Score: 0.851851851851852
+Class: horse, Precision Score: 0.7192982456140351
+Class: motorbike, Precision Score: 0.7531512605042017
+Class: person, Precision Score: 0.7247175141242935
+Class: pottedplant, Precision Score: 0.33368200836820083
+Class: sheep, Precision Score: 0.5264367816091955
+Class: sofa, Precision Score: 0.29347826086956524
+Class: train, Precision Score: 0.8028846153846154
+Class: tvmonitor, Precision Score: 0.4226415094339623
+Average Validation Loss for epoch 2: 0.116
+Validation Performance Measure for epoch 2: 0.649
+Average Training Loss for epoch 3: 0.160
+Average Training Performance Measure for epoch 3: 0.550
+Classwise Precision Scores for epoch 3
+Class: aeroplane, Precision Score: 0.934375
+Class: bicycle, Precision Score: 0.647264631043257
+Class: bird, Precision Score: 0.7698067632850241
+Class: boat, Precision Score: 0.7722953216374269
+Class: bottle, Precision Score: 0.5583864118895966
+Class: bus, Precision Score: 0.8927951388888888
+Class: car, Precision Score: 0.653247183565275
+Class: cat, Precision Score: 0.8844850948509485
+Class: chair, Precision Score: 0.5490506329113924
+Class: cow, Precision Score: 0.40709459459459457
+Class: diningtable, Precision Score: 0.6442687747035574
+Class: dog, Precision Score: 0.7758671369782483
+Class: horse, Precision Score: 0.7423245614035088
+Class: motorbike, Precision Score: 0.8375350140056023
+Class: person, Precision Score: 0.7893596986817324
+Class: pottedplant, Precision Score: 0.3682008368200837
+Class: sheep, Precision Score: 0.6442528735632184
+Class: sofa, Precision Score: 0.34456521739130436
+Class: train, Precision Score: 0.8192307692307692
+Class: tvmonitor, Precision Score: 0.6169811320754717
+Average Validation Loss for epoch 3: 0.102
+Validation Performance Measure for epoch 3: 0.722
+Average Training Loss for epoch 4: 0.155
+Average Training Performance Measure for epoch 4: 0.566
+Classwise Precision Scores for epoch 4
+Class: aeroplane, Precision Score: 0.853125
+Class: bicycle, Precision Score: 0.6902035623409669
+Class: bird, Precision Score: 0.7183574879227053
+Class: boat, Precision Score: 0.6355994152046783
+Class: bottle, Precision Score: 0.6027070063694268
+Class: bus, Precision Score: 0.7478298611111112
+Class: car, Precision Score: 0.5122597746852219
+Class: cat, Precision Score: 0.7975948509485096
+Class: chair, Precision Score: 0.5443037974683544
+Class: cow, Precision Score: 0.3530405405405405
+Class: diningtable, Precision Score: 0.575098814229249
+Class: dog, Precision Score: 0.8228982951205175
+Class: horse, Precision Score: 0.7291666666666666
+Class: motorbike, Precision Score: 0.8721988795518207
+Class: person, Precision Score: 0.7415254237288135
+Class: pottedplant, Precision Score: 0.547071129707113
+Class: sheep, Precision Score: 0.6735632183908046
+Class: sofa, Precision Score: 0.30217391304347824
+Class: train, Precision Score: 0.8567307692307692
+Class: tvmonitor, Precision Score: 0.47358490566037736
+Average Validation Loss for epoch 4: 0.115
+Validation Performance Measure for epoch 4: 0.689
+Average Training Loss for epoch 5: 0.154
+Average Training Performance Measure for epoch 5: 0.577
+Classwise Precision Scores for epoch 5
+Class: aeroplane, Precision Score: 0.87578125
+Class: bicycle, Precision Score: 0.7735368956743003
+Class: bird, Precision Score: 0.7983091787439615
+Class: boat, Precision Score: 0.7777777777777777
+Class: bottle, Precision Score: 0.6350849256900212
+Class: bus, Precision Score: 0.8537326388888888
+Class: car, Precision Score: 0.6812458581842279
+Class: cat, Precision Score: 0.866869918699187
+Class: chair, Precision Score: 0.42914908579465544
+Class: cow, Precision Score: 0.42567567567567566
+Class: diningtable, Precision Score: 0.6689723320158103
+Class: dog, Precision Score: 0.8206937095825986
+Class: horse, Precision Score: 0.8267543859649122
+Class: motorbike, Precision Score: 0.7545518207282914
+Class: person, Precision Score: 0.6937146892655367
+Class: pottedplant, Precision Score: 0.4382845188284519
+Class: sheep, Precision Score: 0.5729885057471265
+Class: sofa, Precision Score: 0.30543478260869567
+Class: train, Precision Score: 0.9192307692307692
+Class: tvmonitor, Precision Score: 0.559433962264151
+Average Validation Loss for epoch 5: 0.114
+Validation Performance Measure for epoch 5: 0.711
+Average Training Loss for epoch 6: 0.152
+Average Training Performance Measure for epoch 6: 0.583
+Classwise Precision Scores for epoch 6
+Class: aeroplane, Precision Score: 0.8546875
+Class: bicycle, Precision Score: 0.7856234096692112
+Class: bird, Precision Score: 0.7842995169082125
+Class: boat, Precision Score: 0.756578947368421
+Class: bottle, Precision Score: 0.44745222929936307
+Class: bus, Precision Score: 0.8980034722222222
+Class: car, Precision Score: 0.5864811133200796
+Class: cat, Precision Score: 0.8780487804878049
+Class: chair, Precision Score: 0.5884317862165963
+Class: cow, Precision Score: 0.49493243243243246
+Class: diningtable, Precision Score: 0.5424901185770751
+Class: dog, Precision Score: 0.8486184597295708
+Class: horse, Precision Score: 0.7554824561403509
+Class: motorbike, Precision Score: 0.7762605042016807
+Class: person, Precision Score: 0.7660075329566852
+Class: pottedplant, Precision Score: 0.4696652719665272
+Class: sheep, Precision Score: 0.6942528735632183
+Class: sofa, Precision Score: 0.31956521739130433
+Class: train, Precision Score: 0.8740384615384615
+Class: tvmonitor, Precision Score: 0.5858490566037736
+Average Validation Loss for epoch 6: 0.106
+Validation Performance Measure for epoch 6: 0.721
+Average Training Loss for epoch 7: 0.149
+Average Training Performance Measure for epoch 7: 0.585
+Classwise Precision Scores for epoch 7
+Class: aeroplane, Precision Score: 0.8765625
+Class: bicycle, Precision Score: 0.6542620865139949
+Class: bird, Precision Score: 0.8570048309178745
+Class: boat, Precision Score: 0.7898391812865496
+Class: bottle, Precision Score: 0.6069532908704882
+Class: bus, Precision Score: 0.8771701388888888
+Class: car, Precision Score: 0.5861497680583168
+Class: cat, Precision Score: 0.8577235772357723
+Class: chair, Precision Score: 0.5713783403656822
+Class: cow, Precision Score: 0.4408783783783784
+Class: diningtable, Precision Score: 0.6953227931488801
+Class: dog, Precision Score: 0.8325984714873604
+Class: horse, Precision Score: 0.7807017543859649
+Class: motorbike, Precision Score: 0.8515406162464986
+Class: person, Precision Score: 0.7690913370998117
+Class: pottedplant, Precision Score: 0.5575313807531381
+Class: sheep, Precision Score: 0.5609195402298851
+Class: sofa, Precision Score: 0.3706521739130435
+Class: train, Precision Score: 0.8932692307692308
+Class: tvmonitor, Precision Score: 0.6471698113207547
+Average Validation Loss for epoch 7: 0.107
+Validation Performance Measure for epoch 7: 0.736
+Average Training Loss for epoch 8: 0.150
+Average Training Performance Measure for epoch 8: 0.592
+Classwise Precision Scores for epoch 8
+Class: aeroplane, Precision Score: 0.853125
+Class: bicycle, Precision Score: 0.710559796437659
+Class: bird, Precision Score: 0.7669082125603864
+Class: boat, Precision Score: 0.7412280701754386
+Class: bottle, Precision Score: 0.5310509554140127
+Class: bus, Precision Score: 0.7925347222222222
+Class: car, Precision Score: 0.5979125248508946
+Class: cat, Precision Score: 0.8821138211382114
+Class: chair, Precision Score: 0.44286216596343186
+Class: cow, Precision Score: 0.30236486486486486
+Class: diningtable, Precision Score: 0.6195652173913043
+Class: dog, Precision Score: 0.8286302175191066
+Class: horse, Precision Score: 0.8179824561403509
+Class: motorbike, Precision Score: 0.853641456582633
+Class: person, Precision Score: 0.7591337099811677
+Class: pottedplant, Precision Score: 0.6492329149232916
+Class: sheep, Precision Score: 0.567816091954023
+Class: sofa, Precision Score: 0.4108695652173913
+Class: train, Precision Score: 0.8884615384615384
+Class: tvmonitor, Precision Score: 0.7386792452830189
+Average Validation Loss for epoch 8: 0.109
+Validation Performance Measure for epoch 8: 0.722
+Average Training Loss for epoch 9: 0.147
+Average Training Performance Measure for epoch 9: 0.596
+Classwise Precision Scores for epoch 9
+Class: aeroplane, Precision Score: 0.88203125
+Class: bicycle, Precision Score: 0.6361323155216284
+Class: bird, Precision Score: 0.7821256038647343
+Class: boat, Precision Score: 0.766812865497076
+Class: bottle, Precision Score: 0.6733014861995753
+Class: bus, Precision Score: 0.8823784722222222
+Class: car, Precision Score: 0.5821736249171636
+Class: cat, Precision Score: 0.8185975609756098
+Class: chair, Precision Score: 0.4337201125175809
+Class: cow, Precision Score: 0.31756756756756754
+Class: diningtable, Precision Score: 0.5790513833992095
+Class: dog, Precision Score: 0.8599353321575545
+Class: horse, Precision Score: 0.7379385964912281
+Class: motorbike, Precision Score: 0.803921568627451
+Class: person, Precision Score: 0.7700564971751411
+Class: pottedplant, Precision Score: 0.4790794979079498
+Class: sheep, Precision Score: 0.7425287356321838
+Class: sofa, Precision Score: 0.6253623188405798
+Class: train, Precision Score: 0.7798076923076923
+Class: tvmonitor, Precision Score: 0.47830188679245284
+Average Validation Loss for epoch 9: 0.110
+Validation Performance Measure for epoch 9: 0.714
+Average Training Loss for epoch 10: 0.147
+Average Training Performance Measure for epoch 10: 0.596
+Classwise Precision Scores for epoch 10
+Class: aeroplane, Precision Score: 0.8734375
+Class: bicycle, Precision Score: 0.7264631043256998
+Class: bird, Precision Score: 0.7103864734299516
+Class: boat, Precision Score: 0.761330409356725
+Class: bottle, Precision Score: 0.6831210191082803
+Class: bus, Precision Score: 0.8784722222222222
+Class: car, Precision Score: 0.6332007952286283
+Class: cat, Precision Score: 0.8672086720867209
+Class: chair, Precision Score: 0.555379746835443
+Class: cow, Precision Score: 0.5523648648648649
+Class: diningtable, Precision Score: 0.5118577075098815
+Class: dog, Precision Score: 0.8500881834215168
+Class: horse, Precision Score: 0.8114035087719298
+Class: motorbike, Precision Score: 0.8385854341736695
+Class: person, Precision Score: 0.7406779661016948
+Class: pottedplant, Precision Score: 0.4602510460251046
+Class: sheep, Precision Score: 0.6436781609195403
+Class: sofa, Precision Score: 0.4532608695652174
+Class: train, Precision Score: 0.8432692307692308
+Class: tvmonitor, Precision Score: 0.5443396226415095
+Average Validation Loss for epoch 10: 0.111
+Validation Performance Measure for epoch 10: 0.727
+Average Training Loss for epoch 11: 0.147
+Average Training Performance Measure for epoch 11: 0.604
+Classwise Precision Scores for epoch 11
+Class: aeroplane, Precision Score: 0.89921875
+Class: bicycle, Precision Score: 0.7029262086513994
+Class: bird, Precision Score: 0.7734299516908212
+Class: boat, Precision Score: 0.7777777777777777
+Class: bottle, Precision Score: 0.707271762208068
+Class: bus, Precision Score: 0.8120659722222222
+Class: car, Precision Score: 0.6666666666666666
+Class: cat, Precision Score: 0.8712737127371274
+Class: chair, Precision Score: 0.47081575246132207
+Class: cow, Precision Score: 0.4189189189189189
+Class: diningtable, Precision Score: 0.5830039525691699
+Class: dog, Precision Score: 0.8505291005291006
+Class: horse, Precision Score: 0.8278508771929824
+Class: motorbike, Precision Score: 0.8546918767507002
+Class: person, Precision Score: 0.7457627118644066
+Class: pottedplant, Precision Score: 0.5031380753138075
+Class: sheep, Precision Score: 0.6908045977011493
+Class: sofa, Precision Score: 0.45869565217391306
+Class: train, Precision Score: 0.8519230769230769
+Class: tvmonitor, Precision Score: 0.5188679245283019
+Average Validation Loss for epoch 11: 0.114
+Validation Performance Measure for epoch 11: 0.730
+Average Training Loss for epoch 12: 0.145
+Average Training Performance Measure for epoch 12: 0.603
+Classwise Precision Scores for epoch 12
+Class: aeroplane, Precision Score: 0.8453125
+Class: bicycle, Precision Score: 0.7837150127226463
+Class: bird, Precision Score: 0.856280193236715
+Class: boat, Precision Score: 0.7865497076023391
+Class: bottle, Precision Score: 0.6385350318471338
+Class: bus, Precision Score: 0.8693576388888888
+Class: car, Precision Score: 0.6058648111332008
+Class: cat, Precision Score: 0.823170731707317
+Class: chair, Precision Score: 0.4620253164556962
+Class: cow, Precision Score: 0.49324324324324326
+Class: diningtable, Precision Score: 0.5039525691699605
+Class: dog, Precision Score: 0.85435038212816
+Class: horse, Precision Score: 0.8739035087719298
+Class: motorbike, Precision Score: 0.7983193277310925
+Class: person, Precision Score: 0.7800847457627116
+Class: pottedplant, Precision Score: 0.553347280334728
+Class: sheep, Precision Score: 0.6977011494252873
+Class: sofa, Precision Score: 0.4876811594202899
+Class: train, Precision Score: 0.8307692307692308
+Class: tvmonitor, Precision Score: 0.4660377358490566
+Average Validation Loss for epoch 12: 0.107
+Validation Performance Measure for epoch 12: 0.731
+Average Training Loss for epoch 13: 0.145
+Average Training Performance Measure for epoch 13: 0.601
+Classwise Precision Scores for epoch 13
+Class: aeroplane, Precision Score: 0.853125
+Class: bicycle, Precision Score: 0.6943384223918575
+Class: bird, Precision Score: 0.6958937198067632
+Class: boat, Precision Score: 0.7722953216374269
+Class: bottle, Precision Score: 0.6602972399150744
+Class: bus, Precision Score: 0.8328993055555555
+Class: car, Precision Score: 0.5251822398939694
+Class: cat, Precision Score: 0.8795731707317073
+Class: chair, Precision Score: 0.3869549929676512
+Class: cow, Precision Score: 0.4577702702702703
+Class: diningtable, Precision Score: 0.5266798418972332
+Class: dog, Precision Score: 0.858318636096414
+Class: horse, Precision Score: 0.7653508771929824
+Class: motorbike, Precision Score: 0.8277310924369747
+Class: person, Precision Score: 0.7582156308851226
+Class: pottedplant, Precision Score: 0.5240585774058577
+Class: sheep, Precision Score: 0.5017241379310344
+Class: sofa, Precision Score: 0.6326086956521739
+Class: train, Precision Score: 0.8278846153846153
+Class: tvmonitor, Precision Score: 0.5311320754716982
+Average Validation Loss for epoch 13: 0.116
+Validation Performance Measure for epoch 13: 0.707
+Average Training Loss for epoch 14: 0.143
+Average Training Performance Measure for epoch 14: 0.603
+Classwise Precision Scores for epoch 14
+Class: aeroplane, Precision Score: 0.86328125
+Class: bicycle, Precision Score: 0.7837150127226463
+Class: bird, Precision Score: 0.7983091787439615
+Class: boat, Precision Score: 0.7635233918128654
+Class: bottle, Precision Score: 0.6146496815286624
+Class: bus, Precision Score: 0.8615451388888888
+Class: car, Precision Score: 0.6537442014579191
+Class: cat, Precision Score: 0.8727981029810299
+Class: chair, Precision Score: 0.5428973277074542
+Class: cow, Precision Score: 0.5101351351351351
+Class: diningtable, Precision Score: 0.5691699604743083
+Class: dog, Precision Score: 0.8395061728395062
+Class: horse, Precision Score: 0.7905701754385965
+Class: motorbike, Precision Score: 0.857843137254902
+Class: person, Precision Score: 0.7531779661016949
+Class: pottedplant, Precision Score: 0.5847280334728033
+Class: sheep, Precision Score: 0.7218390804597701
+Class: sofa, Precision Score: 0.48007246376811596
+Class: train, Precision Score: 0.7788461538461539
+Class: tvmonitor, Precision Score: 0.5679245283018868
+Average Validation Loss for epoch 14: 0.110
+Validation Performance Measure for epoch 14: 0.737
+Average Training Loss for epoch 15: 0.133
+Average Training Performance Measure for epoch 15: 0.643
+Classwise Precision Scores for epoch 15
+Class: aeroplane, Precision Score: 0.90078125
+Class: bicycle, Precision Score: 0.7668575063613231
+Class: bird, Precision Score: 0.8371980676328502
+Class: boat, Precision Score: 0.7697368421052632
+Class: bottle, Precision Score: 0.6345541401273885
+Class: bus, Precision Score: 0.8953993055555555
+Class: car, Precision Score: 0.6679920477137177
+Class: cat, Precision Score: 0.8672086720867209
+Class: chair, Precision Score: 0.4943741209563994
+Class: cow, Precision Score: 0.643581081081081
+Class: diningtable, Precision Score: 0.5602766798418972
+Class: dog, Precision Score: 0.847148736037625
+Class: horse, Precision Score: 0.8245614035087719
+Class: motorbike, Precision Score: 0.8746498599439777
+Class: person, Precision Score: 0.7814030131826741
+Class: pottedplant, Precision Score: 0.5449790794979079
+Class: sheep, Precision Score: 0.7908045977011494
+Class: sofa, Precision Score: 0.5416666666666666
+Class: train, Precision Score: 0.8730769230769231
+Class: tvmonitor, Precision Score: 0.6283018867924528
+Average Validation Loss for epoch 15: 0.105
+Validation Performance Measure for epoch 15: 0.757
+Average Training Loss for epoch 16: 0.128
+Average Training Performance Measure for epoch 16: 0.654
+Classwise Precision Scores for epoch 16
+Class: aeroplane, Precision Score: 0.925
+Class: bicycle, Precision Score: 0.7713104325699746
+Class: bird, Precision Score: 0.8497584541062803
+Class: boat, Precision Score: 0.7759502923976609
+Class: bottle, Precision Score: 0.6098726114649682
+Class: bus, Precision Score: 0.8771701388888888
+Class: car, Precision Score: 0.635685884691849
+Class: cat, Precision Score: 0.8926151761517616
+Class: chair, Precision Score: 0.5288326300984528
+Class: cow, Precision Score: 0.643581081081081
+Class: diningtable, Precision Score: 0.5938735177865613
+Class: dog, Precision Score: 0.8640505584950031
+Class: horse, Precision Score: 0.8355263157894737
+Class: motorbike, Precision Score: 0.8757002801120449
+Class: person, Precision Score: 0.7263653483992466
+Class: pottedplant, Precision Score: 0.5763598326359832
+Class: sheep, Precision Score: 0.7701149425287356
+Class: sofa, Precision Score: 0.5797101449275363
+Class: train, Precision Score: 0.9076923076923077
+Class: tvmonitor, Precision Score: 0.6235849056603774
+Average Validation Loss for epoch 16: 0.110
+Validation Performance Measure for epoch 16: 0.757
+Average Training Loss for epoch 17: 0.123
+Average Training Performance Measure for epoch 17: 0.670
+Classwise Precision Scores for epoch 17
+Class: aeroplane, Precision Score: 0.91015625
+Class: bicycle, Precision Score: 0.7709923664122137
+Class: bird, Precision Score: 0.8316425120772948
+Class: boat, Precision Score: 0.7777777777777777
+Class: bottle, Precision Score: 0.6218152866242038
+Class: bus, Precision Score: 0.8993055555555555
+Class: car, Precision Score: 0.6595427435387674
+Class: cat, Precision Score: 0.9073509485094852
+Class: chair, Precision Score: 0.5717299578059072
+Class: cow, Precision Score: 0.6756756756756757
+Class: diningtable, Precision Score: 0.6156126482213439
+Class: dog, Precision Score: 0.862286890064668
+Class: horse, Precision Score: 0.8530701754385965
+Class: motorbike, Precision Score: 0.8378851540616246
+Class: person, Precision Score: 0.788394538606403
+Class: pottedplant, Precision Score: 0.6380753138075314
+Class: sheep, Precision Score: 0.8356321839080461
+Class: sofa, Precision Score: 0.6043478260869565
+Class: train, Precision Score: 0.8826923076923077
+Class: tvmonitor, Precision Score: 0.7245283018867924
+Average Validation Loss for epoch 17: 0.099
+Validation Performance Measure for epoch 17: 0.780
+Average Training Loss for epoch 18: 0.120
+Average Training Performance Measure for epoch 18: 0.684
+Classwise Precision Scores for epoch 18
+Class: aeroplane, Precision Score: 0.93671875
+Class: bicycle, Precision Score: 0.7468193384223918
+Class: bird, Precision Score: 0.802657004830918
+Class: boat, Precision Score: 0.795687134502924
+Class: bottle, Precision Score: 0.6257961783439491
+Class: bus, Precision Score: 0.8862847222222222
+Class: car, Precision Score: 0.6381709741550696
+Class: cat, Precision Score: 0.9017615176151762
+Class: chair, Precision Score: 0.54957805907173
+Class: cow, Precision Score: 0.6925675675675675
+Class: diningtable, Precision Score: 0.607707509881423
+Class: dog, Precision Score: 0.8567019400352734
+Class: horse, Precision Score: 0.868421052631579
+Class: motorbike, Precision Score: 0.8851540616246499
+Class: person, Precision Score: 0.8058145009416192
+Class: pottedplant, Precision Score: 0.602510460251046
+Class: sheep, Precision Score: 0.8339080459770115
+Class: sofa, Precision Score: 0.6134057971014493
+Class: train, Precision Score: 0.9048076923076923
+Class: tvmonitor, Precision Score: 0.7320754716981132
+Average Validation Loss for epoch 18: 0.098
+Validation Performance Measure for epoch 18: 0.780
+Average Training Loss for epoch 19: 0.118
+Average Training Performance Measure for epoch 19: 0.688
+Classwise Precision Scores for epoch 19
+Class: aeroplane, Precision Score: 0.9203125
+Class: bicycle, Precision Score: 0.7951653944020356
+Class: bird, Precision Score: 0.8543478260869565
+Class: boat, Precision Score: 0.8168859649122807
+Class: bottle, Precision Score: 0.6520700636942676
+Class: bus, Precision Score: 0.8980034722222222
+Class: car, Precision Score: 0.635685884691849
+Class: cat, Precision Score: 0.9027777777777778
+Class: chair, Precision Score: 0.5966947960618846
+Class: cow, Precision Score: 0.6469594594594594
+Class: diningtable, Precision Score: 0.6521739130434783
+Class: dog, Precision Score: 0.8768371546149324
+Class: horse, Precision Score: 0.8728070175438597
+Class: motorbike, Precision Score: 0.867296918767507
+Class: person, Precision Score: 0.8104990583804138
+Class: pottedplant, Precision Score: 0.6182008368200836
+Class: sheep, Precision Score: 0.8080459770114943
+Class: sofa, Precision Score: 0.6043478260869565
+Class: train, Precision Score: 0.8788461538461538
+Class: tvmonitor, Precision Score: 0.7037735849056603
+Average Validation Loss for epoch 19: 0.098
+Validation Performance Measure for epoch 19: 0.790
+Average Training Loss for epoch 20: 0.116
+Average Training Performance Measure for epoch 20: 0.695
+Classwise Precision Scores for epoch 20
+Class: aeroplane, Precision Score: 0.91796875
+Class: bicycle, Precision Score: 0.7856234096692111
+Class: bird, Precision Score: 0.8673913043478261
+Class: boat, Precision Score: 0.8183479532163742
+Class: bottle, Precision Score: 0.6488853503184714
+Class: bus, Precision Score: 0.9006076388888888
+Class: car, Precision Score: 0.6192842942345924
+Class: cat, Precision Score: 0.8953252032520326
+Class: chair, Precision Score: 0.5782348804500702
+Class: cow, Precision Score: 0.7128378378378378
+Class: diningtable, Precision Score: 0.6442687747035574
+Class: dog, Precision Score: 0.8666960611405056
+Class: horse, Precision Score: 0.868421052631579
+Class: motorbike, Precision Score: 0.8641456582633052
+Class: person, Precision Score: 0.8043314500941617
+Class: pottedplant, Precision Score: 0.6457461645746165
+Class: sheep, Precision Score: 0.8718390804597701
+Class: sofa, Precision Score: 0.6173913043478261
+Class: train, Precision Score: 0.9163461538461538
+Class: tvmonitor, Precision Score: 0.689622641509434
+Average Validation Loss for epoch 20: 0.096
+Validation Performance Measure for epoch 20: 0.790
+Average Training Loss for epoch 21: 0.112
+Average Training Performance Measure for epoch 21: 0.703
+Classwise Precision Scores for epoch 21
+Class: aeroplane, Precision Score: 0.9140625
+Class: bicycle, Precision Score: 0.7891221374045801
+Class: bird, Precision Score: 0.8642512077294686
+Class: boat, Precision Score: 0.8150584795321637
+Class: bottle, Precision Score: 0.6743630573248408
+Class: bus, Precision Score: 0.8706597222222222
+Class: car, Precision Score: 0.6192842942345924
+Class: cat, Precision Score: 0.8976964769647697
+Class: chair, Precision Score: 0.5569620253164556
+Class: cow, Precision Score: 0.6655405405405406
+Class: diningtable, Precision Score: 0.6462450592885376
+Class: dog, Precision Score: 0.8746325690770136
+Class: horse, Precision Score: 0.8278508771929824
+Class: motorbike, Precision Score: 0.8357843137254901
+Class: person, Precision Score: 0.8087099811676077
+Class: pottedplant, Precision Score: 0.6321478382147838
+Class: sheep, Precision Score: 0.839080459770115
+Class: sofa, Precision Score: 0.5880434782608696
+Class: train, Precision Score: 0.9
+Class: tvmonitor, Precision Score: 0.6962264150943396
+Average Validation Loss for epoch 21: 0.099
+Validation Performance Measure for epoch 21: 0.784
+Average Training Loss for epoch 22: 0.112
+Average Training Performance Measure for epoch 22: 0.707
+Classwise Precision Scores for epoch 22
+Class: aeroplane, Precision Score: 0.93359375
+Class: bicycle, Precision Score: 0.7652671755725191
+Class: bird, Precision Score: 0.8681159420289855
+Class: boat, Precision Score: 0.8260233918128654
+Class: bottle, Precision Score: 0.6488853503184714
+Class: bus, Precision Score: 0.8993055555555555
+Class: car, Precision Score: 0.6819085487077535
+Class: cat, Precision Score: 0.9124322493224932
+Class: chair, Precision Score: 0.546237693389592
+Class: cow, Precision Score: 0.7539414414414414
+Class: diningtable, Precision Score: 0.6126482213438735
+Class: dog, Precision Score: 0.8738977072310405
+Class: horse, Precision Score: 0.8497807017543859
+Class: motorbike, Precision Score: 0.8494397759103641
+Class: person, Precision Score: 0.8065913370998112
+Class: pottedplant, Precision Score: 0.6328451882845189
+Class: sheep, Precision Score: 0.8586206896551725
+Class: sofa, Precision Score: 0.6130434782608696
+Class: train, Precision Score: 0.8951923076923077
+Class: tvmonitor, Precision Score: 0.7452830188679245
+Average Validation Loss for epoch 22: 0.096
+Validation Performance Measure for epoch 22: 0.793
+Average Training Loss for epoch 23: 0.111
+Average Training Performance Measure for epoch 23: 0.707
+Classwise Precision Scores for epoch 23
+Class: aeroplane, Precision Score: 0.9421875
+Class: bicycle, Precision Score: 0.7929389312977099
+Class: bird, Precision Score: 0.8601449275362318
+Class: boat, Precision Score: 0.7993421052631579
+Class: bottle, Precision Score: 0.6265923566878981
+Class: bus, Precision Score: 0.8967013888888888
+Class: car, Precision Score: 0.6600397614314115
+Class: cat, Precision Score: 0.902269647696477
+Class: chair, Precision Score: 0.6123417721518988
+Class: cow, Precision Score: 0.706081081081081
+Class: diningtable, Precision Score: 0.6462450592885376
+Class: dog, Precision Score: 0.8672839506172839
+Class: horse, Precision Score: 0.8596491228070176
+Class: motorbike, Precision Score: 0.8651960784313725
+Class: person, Precision Score: 0.804260828625235
+Class: pottedplant, Precision Score: 0.6269177126917713
+Class: sheep, Precision Score: 0.8442528735632184
+Class: sofa, Precision Score: 0.6119565217391304
+Class: train, Precision Score: 0.9144230769230769
+Class: tvmonitor, Precision Score: 0.7754716981132076
+Average Validation Loss for epoch 23: 0.097
+Validation Performance Measure for epoch 23: 0.796
+Average Training Loss for epoch 24: 0.108
+Average Training Performance Measure for epoch 24: 0.715
+Classwise Precision Scores for epoch 24
+Class: aeroplane, Precision Score: 0.940625
+Class: bicycle, Precision Score: 0.7744910941475827
+Class: bird, Precision Score: 0.8869565217391304
+Class: boat, Precision Score: 0.8274853801169592
+Class: bottle, Precision Score: 0.6751592356687898
+Class: bus, Precision Score: 0.8823784722222222
+Class: car, Precision Score: 0.6381709741550696
+Class: cat, Precision Score: 0.8656842818428184
+Class: chair, Precision Score: 0.6598101265822784
+Class: cow, Precision Score: 0.7398648648648649
+Class: diningtable, Precision Score: 0.7065217391304348
+Class: dog, Precision Score: 0.8641975308641975
+Class: horse, Precision Score: 0.8432017543859649
+Class: motorbike, Precision Score: 0.8693977591036414
+Class: person, Precision Score: 0.8118408662900185
+Class: pottedplant, Precision Score: 0.6823570432357043
+Class: sheep, Precision Score: 0.8724137931034482
+Class: sofa, Precision Score: 0.6065217391304348
+Class: train, Precision Score: 0.8884615384615384
+Class: tvmonitor, Precision Score: 0.8066037735849056
+Average Validation Loss for epoch 24: 0.101
+Validation Performance Measure for epoch 24: 0.804

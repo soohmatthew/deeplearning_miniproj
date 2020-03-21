@@ -263,13 +263,13 @@ def trainModel(train_dataloader,
                 optimizer,
                 num_epochs,
                 validation_results_fp,
-                threshold = 0.5,
+                threshold = 0.6,
                 scheduler = None,
                 plot = True,
                 device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
                 print_batch_results = False,
                 print_classwise_results = False,
-                epoch_start_train_full_model = 100):
+                epoch_start_train_full_model = 15):
     if torch.cuda.is_available():
         model.cuda()
 
@@ -564,7 +564,7 @@ def tailacc(y_pred, y, num_t_values = 10, start_t = 0.5):
 
 if __name__=='__main__':
     project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
-
+    
     start_time = dt.datetime.now()
 
     train_test = True
@@ -585,10 +585,10 @@ if __name__=='__main__':
         train_model = True,
         predict_on_test = True,
         verbose = True,
-        batch_size = 8,
+        batch_size = 4,
         no_classes = 20,
         learning_rate = 0.001,
-        num_epochs = 75,
+        num_epochs = 25,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
         save_weights_fp = save_weights_fp,
@@ -620,8 +620,6 @@ if __name__=='__main__':
 
     ##################
     # Initialise model
-    #model_ft = models.resnet18(pretrained=True)
-    #convo_output_num_features = model_ft.fc.in_features
 
     model_ft = models.densenet121(pretrained=True)
     convo_output_num_features = model_ft.classifier.in_features
@@ -639,7 +637,7 @@ if __name__=='__main__':
     if train_test:
         params['model'] = model_ft
         params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
-        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[25,50], gamma=0.1)
+        params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[15], gamma= 0.01)
         # Train model
         train_test_model(train_dataloader = train_dl, validation_dataloader = valid_dl, test_dataloader = test_dl, **params)
         print(f'Time Taken: {dt.datetime.now()-start_time}')
