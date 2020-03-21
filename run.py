@@ -6,6 +6,7 @@ import datetime as dt
 import time
 import logging
 import seaborn as sns
+import re
 
 from torch.utils import data
 from torchvision import models, transforms
@@ -132,11 +133,15 @@ def get_test_data(filepath, transforms):
 def prepare_data(batch_size, trainval_filepath, test_filepath, train_transforms = None, test_transforms = None):
     train_data = get_data('train', trainval_filepath, train_transforms)
     valid_data = get_data('val', trainval_filepath, test_transforms)
-    test_data = get_test_data(test_filepath, test_transforms)
+    if os.path.exists(test_filepath):
+        test_data = get_test_data(test_filepath, test_transforms)
+        test_dl = data.DataLoader(test_data, batch_size = batch_size, shuffle = False)
+    else:
+        test_dl = None
+        print('Test Data not found. Setting test_dataloader = None')
 
     train_dl = data.DataLoader(train_data, batch_size = batch_size, shuffle = True)
     valid_dl = data.DataLoader(valid_data, batch_size = batch_size, shuffle = False)
-    test_dl = data.DataLoader(test_data, batch_size = batch_size, shuffle = False)
     return train_dl, valid_dl, test_dl
 
 def avg_precision(outputs, labels, threshold = 0.5):
@@ -382,13 +387,13 @@ def predict(model, test_dl, save_weights_fp, device):
 
 def train_test_model(train_dataloader,
                     validation_dataloader,
-                    test_dataloader,
                     model,
                     criterion,
                     optimizer,
                     validation_results_fp,
                     predict_on_test,
                     save_weights_fp,
+                    test_dataloader = None,
                     threshold = 0.5,
                     test = True,
                     train_model = True,
@@ -440,6 +445,8 @@ def train_test_model(train_dataloader,
     ################
     # For prediction on test
     if predict_on_test:
+        if test_dataloader is None:
+            raise Exception('Cannot Predict on test set without test_dataloader')
         if verbose:
             print('Predicting on test set...')
         if os.path.exists(save_weights_fp):
@@ -525,7 +532,7 @@ def plot_tail_acc(model, valid_dl, save_weights_fp):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     model.to(device)
-    model.load_state_dict(torch.load(save_weights_fp))
+    model.load_state_dict(torch.load(save_weights_fp, map_location = device))
     model.eval()
 
     y = []
@@ -575,15 +582,10 @@ if __name__=='__main__':
     trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
     test_fp = os.path.join(project_dir,'VOCdevkit','VOC2012_test','JPEGImages') # Location of test dataset
 
-    # Set save destinations
-    save_weights_fp = os.path.join(project_dir, 'model_weights', f"model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
-    validation_results_fp = os.path.join(project_dir,'predictions', f"validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
-    predictions_fp = os.path.join(project_dir, 'predictions', f"test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
-
     # Set params, optimiser, loss and scheduler
     params = dict(
-        train_model = True,
-        predict_on_test = True,
+        train_model = False,
+        predict_on_test = False,
         verbose = True,
         batch_size = 4,
         no_classes = 20,
@@ -591,10 +593,30 @@ if __name__=='__main__':
         num_epochs = 25,
         threshold = 0.5,
         criterion = torch.nn.BCELoss(),
-        save_weights_fp = save_weights_fp,
-        predictions_fp = predictions_fp,
-        validation_results_fp = validation_results_fp
     )
+
+    if not os.path.exists(trainval_fp):
+        raise Exception('VOCdevkit not present. Please download VOCdevkit.')
+
+    if params['predict_on_test'] and not os.path.exists(test_fp):
+        raise Exception('VOCdevkit test images not present. Please download VOCdevkit test images, store in folder VOCdevkit as directory VOC2012_test.')
+
+    # Set save destinations
+    if params['train_model']:
+        save_weights_fp = os.path.join(project_dir, 'model_weights', f"model_weights_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.pth") # Save destination for model weights
+        validation_results_fp = os.path.join(project_dir,'predictions', f"validation_output_results_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npz")
+        predictions_fp = os.path.join(project_dir, 'predictions', f"test_predictions_{str(time.ctime()).replace(':','').replace('  ',' ').replace(' ','_')}.npy") # Save destination for test set predictions
+    else:
+        save_weights_fp = os.path.join(project_dir,'model_weights',os.listdir(os.path.join(project_dir,'model_weights'))[0])
+        validation_results_list = [file_name for file_name in os.listdir(os.path.join(project_dir,'predictions')) if 'validation' in file_name]
+        validation_results_fp = os.path.join(project_dir,'predictions',validation_results_list[0])
+        
+        test_results_list = [file_name for file_name in os.listdir(os.path.join(project_dir,'predictions')) if 'test' in file_name]
+        predictions_fp = os.path.join(project_dir,'predictions',validation_results_list[0])
+    
+    params['save_weights_fp'] = save_weights_fp
+    params['predictions_fp'] = predictions_fp
+    params['validation_results_fp'] = validation_results_fp
 
     # Set transforms
     train_transforms_centcrop = transforms.Compose([transforms.Resize(280),
@@ -647,6 +669,11 @@ if __name__=='__main__':
         validation_results = np.load(validation_results_fp, allow_pickle = True)
         output_results, pic_filepaths = validation_results.files
         pic_filepaths = validation_results[pic_filepaths]
+
+        for i, fp_list in enumerate(pic_filepaths):
+            for j, file_name in enumerate(fp_list):
+                pic_filepaths[i][j] = os.path.join(trainval_fp,'JPEGImages',re.findall("\d+_\d+.jpg",file_name)[0])
+
         output_results = validation_results[output_results]
         pic_filepaths = np.hstack(pic_filepaths)
 
