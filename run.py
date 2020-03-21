@@ -571,12 +571,10 @@ def tailacc(y_pred, y, num_t_values = 10, start_t = 0.5):
 
 if __name__=='__main__':
     project_dir = os.getcwd() #"C:\\Users\\lohzy\\Desktop\\dl_project"
-    
     start_time = dt.datetime.now()
 
-    train_test = True
-    find_scoring_images = True
-    get_tail_acc = True
+    find_scoring_images = True # Flag for find highest and lowest scoring images
+    get_tail_acc = True # Flag for computing tail acc
 
     # Set filepaths
     trainval_fp = os.path.join(project_dir,'VOCdevkit','VOC2012') # Location of trainval dataset
@@ -656,7 +654,7 @@ if __name__=='__main__':
         torch.nn.Sigmoid()
     )
     
-    if train_test:
+    if params['train_model'] or params['predict_on_test']:
         params['model'] = model_ft
         params['optimizer'] = torch.optim.Adam(model_ft.parameters(),lr=params['learning_rate'])
         params['scheduler'] = torch.optim.lr_scheduler.MultiStepLR(params['optimizer'], milestones=[15], gamma= 0.01)
@@ -677,9 +675,9 @@ if __name__=='__main__':
         output_results = validation_results[output_results]
         pic_filepaths = np.hstack(pic_filepaths)
 
-    for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
-        save_top_pic(output_results, pic_filepaths, label)
-        save_bot_pic(output_results, pic_filepaths, label)
+        for label in ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle']:
+            save_top_pic(output_results, pic_filepaths, label)
+            save_bot_pic(output_results, pic_filepaths, label)
 
     if get_tail_acc:
         # Plot Tail Acct
